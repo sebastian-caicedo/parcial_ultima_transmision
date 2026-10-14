@@ -1,0 +1,35 @@
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam packageStyle rectangle
+skinparam ArrowColor #35577A
+skinparam usecaseBackgroundColor #ECF5FD
+skinparam usecaseBorderColor #235B89
+actor "Escritora" as Escritora
+actor "Lector" as Lector
+actor "Sistema de archivos" as Archivos
+
+rectangle "Motor de historias interactivas" {
+  usecase "Iniciar partida\n(RF02, RF03)" as UC1
+  usecase "Cargar historia\n(RF01, RF03)" as UC2
+  usecase "Validar historia\n(RF14-RF16)" as UC3
+  usecase "Leer escena y opciones\n(RF04, RF05, RF10)" as UC4
+  usecase "Elegir opcion\n(RF06-RF10)" as UC5
+  usecase "Reiniciar sesion\n(RF12)" as UC6
+  usecase "Reconocer final\n(RF11)" as UC7
+  usecase "Informar bloqueo\n(RF13)" as UC8
+}
+Escritora --> UC2
+Escritora --> UC3
+Lector --> UC1
+Lector --> UC4
+Lector --> UC5
+Lector --> UC6
+Archivos --> UC2
+UC1 ..> UC2 : <<include>>
+UC2 ..> UC3 : <<include>>
+UC7 ..> UC5 : <<extend>>
+UC8 ..> UC5 : <<extend>>
+@enduml
