@@ -25,10 +25,11 @@ El problema es construir un **motor que interprete historias escritas en archivo
 - Rechazar entradas inválidas sin alterar la partida.
 - Reconocer finales, detectar bloqueos (escena no final sin opciones habilitadas) y reiniciar.
 - Funcionar con cualquier historia que cumpla el formato, sin cambios en el motor.
+- - **Retroceso (actualizado en la hora 6):** la versión inicial no lo incluía por el conflicto entre escritora y diseñador. La solicitud de cambio lo resolvió: se incluye **deshacer la última decisión, con un solo nivel** (RF17–RF20). Rehacer y retroceso de varios niveles siguen fuera del alcance.
 
 **No incluye:**
 - Cuentas de usuario, base de datos, guardado entre ejecuciones, internet, editor visual, audio, imágenes ni lenguaje de expresiones.
-- **Retroceso:** hay un conflicto entre la escritora, que quiere poder retroceder siempre, y el diseñador, que quiere decisiones irreversibles. Queda fuera de la versión inicial por acuerdo provisional, y la pregunta de aclaración se registra en Requerimientos.
+
 
 ## 1.4 Riesgos
 
