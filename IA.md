@@ -20,7 +20,7 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 | 3 | Backlog y división del trabajo | Propuso backlog de 36 tareas y reparto | Cada actividad de la sección 4 tiene tarea |
 | 4 | Tablero | Generó scripts para crearlo; fallaron | Tablero hecho a mano; scripts descartados |
 | 5 | Unidad 1 – Fundamentos | Redactó borrador de problema, riesgos y calidad | Revisión contra rúbrica y voces del cliente |
-| 6 | Unidad 2 – Procesos | | |
+  | 6 | Unidad 2 – Procesos | Redactó comparación incremental vs. cascada | Revisión contra la sección 4 de la guía |
 | 7 | Unidad 3 – Agilidad | | |
 | 8 | Unidad 4 – Requerimientos | Redactó RF, RNF, errores V01–V09 y preguntas; revisión cruzada asistida con ChatGPT (Javier) | Cruce con N01–N06 y CA01–CA03; defecto de RNF02 contrastado con RF15 y V01 |
 | 9 | Unidad 5 – Modelado | Generó diagramas de clases, secuencia y estados en PlantUML y su explicación | Nombres iguales al vocabulario de requisitos; RF anotados en cada diagrama |
@@ -58,7 +58,7 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 - **Qué se subió:** Se creó el tablero manualmente; solo quedaron las etiquetas que el script alcanzó a crear.
 - **Verificación:** revisión visual del tablero (tareas, responsables y estados) y captura inicial en `evidencias/tablero/`.
 
-### 5. Unidad 1 – Fundamentos (`docs/01_fundamentos_y_proceso.md`, sección 1)
+### 5. Unidad 1 – Fundamentos (`docs/01_fundamentos_y_procesos.md`, sección 1)
 - **Qué se pidió:** redactar problema, actores, alcance, dos riesgos con mitigación, priorización de atributos de calidad y una decisión de responsabilidad profesional con la información dada.
 - **Qué entregó la IA:** borrador con actores separados en usuarios e interesados, retroceso fuera del alcance, riesgos R1 (errores en el contenido) y R2 (cambio en la hora 6), priorización confiabilidad > modificabilidad > claridad de errores, y la decisión de tratar los archivos de historia como solo lectura (autoría del contenido).
 - **Qué se subió:** el documento en `docs/`.
@@ -67,7 +67,7 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 ### 6. Unidad 4 – Requerimientos (`docs/02_requerimientos.md`)
 - **Qué se pidió:** RF atómicos con criterio de aceptación para N01–N06, tres RNF medibles, tres preguntas con respuesta o supuesto.
 - **Qué entregó la IA:** vocabulario común, 16 RF (RF01–RF16) con criterios que incluyen CA01, CA02 y CA03, tabla de errores V01–V09, trazabilidad necesidad → requisito, tres RNF (modificabilidad, claridad de errores, confiabilidad) con procedimiento y evidencia, y preguntas P1 (retroceso, con acuerdo provisional), P2 (errores múltiples) y P3 (escenas inalcanzables).
-- **Qué se subió:** el documento en `docs/`. La sección 3.7 (revisión cruzada) la completa Javier sin IA.
+- **Qué se subió:** el documento en docs/. La sección 3.7 resume la revisión cruzada de Javier; el detalle está en docs/revision_cruzada.md.
 - **Verificación:** cruce de cada necesidad N01–N06 con al menos un RF, comprobación de que CA01–CA03 aparecen literalmente en los criterios, y de que las nueve categorías de error de la sección 5 de la guía están en V01–V09.
 
 ### 7. Revisión cruzada de requisitos – Javier (`docs/revision_cruzada.md`)
