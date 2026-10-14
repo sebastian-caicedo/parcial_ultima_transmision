@@ -1,0 +1,48 @@
+@startuml secuencia_elegir
+' Diagrama de secuencia: elegir una opción (T15)
+' Trazabilidad: RF05, RF06, RF07, RF08, RF09, RF11, RF13
+title Secuencia - Elegir una opción
+skinparam shadowing false
+autonumber
+
+actor Lector
+participant "InterfazConsola" as UI
+participant "Sesion" as S
+participant "Escena\n(actual)" as E
+participant "Opcion" as O
+
+UI -> S : opciones_habilitadas()
+S --> UI : [op1, op2]
+UI -> Lector : muestra texto y opciones numeradas
+
+Lector -> UI : escribe entrada
+alt entrada no es un número de la lista (RF09)
+  UI -> Lector : aviso "Entrada no válida"
+  note right of UI : No se llama a la Sesion.\nLa partida no cambia.
+else número válido
+  UI -> S : elegir(id_opcion)
+  S -> E : opcion(id_opcion)
+  E --> S : opcion | None
+  alt opción inexistente (RF08)
+    S --> UI : ResultadoEleccion(aceptada=falso,\n"opción inexistente")
+  else opción existe
+    S -> O : esta_habilitada(estado)
+    O --> S : verdadero | falso
+    alt no habilitada (RF08 / CA02)
+      S --> UI : ResultadoEleccion(aceptada=falso,\n"opción no habilitada")
+    else habilitada
+      S -> S : aplicar efectos al estado (RF06)
+      S -> S : escena_actual = destino (RF07)
+      S --> UI : ResultadoEleccion(aceptada=verdadero)
+    end
+  end
+  UI -> S : esta_en_final() / esta_bloqueada()
+  alt final (RF11)
+    UI -> Lector : texto final + "Fin de la partida"\n+ opción reiniciar
+  else bloqueada (RF13)
+    UI -> Lector : "No hay opciones disponibles"\n+ opción reiniciar
+  else continúa
+    UI -> Lector : nueva escena y opciones habilitadas
+  end
+end
+@enduml

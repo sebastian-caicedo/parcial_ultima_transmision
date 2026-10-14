@@ -1,0 +1,31 @@
+@startuml estados_sesion
+' Diagrama de estados de una sesión (T16)
+' Trazabilidad: RF02, RF08, RF11, RF12, RF13
+title Estados de una sesión
+skinparam shadowing false
+hide empty description
+
+[*] --> Evaluando : historia válida cargada /\nescena = inicio, estado = variables iniciales (RF02)
+
+state Evaluando <<choice>>
+
+Evaluando --> EnCurso : [escena no final y\nhay opciones habilitadas]
+Evaluando --> Finalizada : [escena final] (RF11)
+Evaluando --> Bloqueada : [escena no final y\nninguna opción habilitada] (RF13)
+
+EnCurso --> EnCurso : elegir(opción inexistente\no no habilitada) /\nrechazo, sin cambios (RF08)
+EnCurso --> Evaluando : elegir(opción habilitada) /\naplicar efectos, ir a destino
+
+Finalizada --> Evaluando : reiniciar() (RF12)
+Bloqueada --> Evaluando : reiniciar() (RF12)
+EnCurso --> Evaluando : reiniciar() (RF12)
+
+Finalizada --> [*] : salir
+Bloqueada --> [*] : salir
+EnCurso --> [*] : salir
+
+note right of Finalizada
+  Sin opciones de avance.
+  Solo reiniciar o salir.
+end note
+@enduml

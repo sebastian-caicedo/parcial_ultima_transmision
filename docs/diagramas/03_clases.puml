@@ -1,0 +1,85 @@
+@startuml clases
+' Diagrama de clases del dominio (T14)
+' Trazabilidad: RF02, RF05, RF06, RF07, RF08, RF10, RF11, RF12, RF13, RF15, RF16
+title Clases del dominio - Motor de historias
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+hide empty members
+
+class Historia {
+  + titulo : str
+  + inicio : str
+  + variables_iniciales : dict[str, bool]
+  --
+  + escena(id : str) : Escena
+}
+
+class Escena {
+  + id : str
+  + texto : str
+  + final : bool
+  --
+  + opcion(id : str) : Opcion | None
+}
+
+class Opcion {
+  + id : str
+  + texto : str
+  + destino : str
+  + condiciones : dict[str, bool]
+  + efectos : dict[str, bool]
+  --
+  + esta_habilitada(estado : dict[str, bool]) : bool
+}
+
+class Sesion {
+  - escena_actual : Escena
+  - estado : dict[str, bool]
+  --
+  + opciones_habilitadas() : list[Opcion]
+  + elegir(id_opcion : str) : ResultadoEleccion
+  + esta_en_final() : bool
+  + esta_bloqueada() : bool
+  + reiniciar() : None
+}
+
+class ResultadoEleccion <<inmutable>> {
+  + aceptada : bool
+  + motivo : str
+}
+
+class ErrorContenido <<inmutable>> {
+  + codigo : str
+  + mensaje : str
+  + ubicacion : str
+}
+
+class HistoriaInvalidaError <<excepción>> {
+  + errores : list[ErrorContenido]
+}
+
+Historia "1" *-- "1..*" Escena : contiene >
+Escena "1" *-- "0..*" Opcion : ofrece >
+Opcion ..> Escena : destino\n(por id)
+Sesion "0..*" --> "1" Historia : juega >
+Sesion --> "1" Escena : escena_actual
+Sesion ..> ResultadoEleccion : crea >
+HistoriaInvalidaError "1" o-- "1..*" ErrorContenido
+
+note right of Opcion
+  Habilitada si TODAS las condiciones
+  coinciden con el estado.
+  Condiciones vacías = siempre habilitada.
+end note
+
+note bottom of Sesion
+  Final: escena_actual.final = verdadero.
+  Bloqueada: no final y sin opciones habilitadas.
+  Una elección rechazada no cambia escena ni estado.
+end note
+
+note bottom of ErrorContenido
+  codigo: V01 a V09
+  ubicacion: escena / opción / campo afectado
+end note
+@enduml
