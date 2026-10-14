@@ -22,8 +22,10 @@ $TITULO = 'Tablero - Parcial IS La última transmisión'
 $MAPA   = Join-Path (Get-Location) 'docs\mapa_issues.txt'
 $utf8   = New-Object System.Text.UTF8Encoding($false)
 
-function Gh {
-    $salida = & gh @args
+# OJO: PowerShell no distingue mayúsculas, así que la función NO puede llamarse "gh"
+# (se llamaría a sí misma). Se llama Invoke-Gh y ejecuta gh.exe explícitamente.
+function Invoke-Gh {
+    $salida = & gh.exe @args
     if ($LASTEXITCODE -ne 0) { throw "Falló: gh $($args -join ' ')" }
     return $salida
 }
@@ -37,15 +39,15 @@ $etiquetas = @{
     'cambio' = '5319e7'; 'entrega' = 'c5def5'
 }
 1..7 | ForEach-Object { $etiquetas["unidad-$_"] = '1d76db' }
-foreach ($e in $etiquetas.Keys) { Gh label create $e --color $etiquetas[$e] --repo $REPO --force | Out-Null }
+foreach ($e in $etiquetas.Keys) { Invoke-Gh label create $e --color $etiquetas[$e] --repo $REPO --force | Out-Null }
 
 # ---------- 2. Tablero ----------
 Write-Host 'Creando tablero...'
-$projNum = (Gh project create --owner $OWNER --title $TITULO --format json --jq .number | Select-Object -Last 1).Trim()
-$projId  = (Gh project view $projNum --owner $OWNER --format json --jq .id | Select-Object -Last 1).Trim()
-& gh project link $projNum --owner $OWNER --repo $REPO | Out-Null
+$projNum = (Invoke-Gh project create --owner $OWNER --title $TITULO --format json --jq .number | Select-Object -Last 1).Trim()
+$projId  = (Invoke-Gh project view $projNum --owner $OWNER --format json --jq .id | Select-Object -Last 1).Trim()
+& gh.exe project link $projNum --owner $OWNER --repo $REPO | Out-Null
 
-$campos = (Gh project field-list $projNum --owner $OWNER --format json | Out-String) | ConvertFrom-Json
+$campos = (Invoke-Gh project field-list $projNum --owner $OWNER --format json | Out-String) | ConvertFrom-Json
 $status = $campos.fields | Where-Object { $_.name -eq 'Status' }
 $opt = @{}
 foreach ($o in $status.options) { $opt[$o.name] = $o.id }
@@ -68,16 +70,16 @@ foreach ($fila in $filas) {
     if ($resp -like '*SC*') { $ghArgs += @('--assignee', $USR_SC) }
     if ($resp -like '*JC*') { $ghArgs += @('--assignee', $USR_JC) }
 
-    $url = (Gh @ghArgs | Select-Object -Last 1).Trim()
-    $item = (Gh project item-add $projNum --owner $OWNER --url $url --format json --jq .id | Select-Object -Last 1).Trim()
+    $url = (Invoke-Gh @ghArgs | Select-Object -Last 1).Trim()
+    $item = (Invoke-Gh project item-add $projNum --owner $OWNER --url $url --format json --jq .id | Select-Object -Last 1).Trim()
 
     switch ($id) {
         'T01'   { $estado = $opt['Done'] }
         'T02'   { $estado = $opt['In Progress'] }
         default { $estado = $opt['Todo'] }
     }
-    Gh project item-edit --id $item --project-id $projId --field-id $status.id --single-select-option-id $estado | Out-Null
-    if ($id -eq 'T01') { Gh issue close $url --reason completed | Out-Null }
+    Invoke-Gh project item-edit --id $item --project-id $projId --field-id $status.id --single-select-option-id $estado | Out-Null
+    if ($id -eq 'T01') { Invoke-Gh issue close $url --reason completed | Out-Null }
 
     $linea = "$id -> #$($url.Split('/')[-1]) ($resp)"
     Write-Host $linea
