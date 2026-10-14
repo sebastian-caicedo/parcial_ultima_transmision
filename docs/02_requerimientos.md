@@ -94,7 +94,7 @@ Estos términos se usan igual en requisitos, diagramas y código.
 | ID | Atributo | Requisito medible | Procedimiento de verificación | Evidencia |
 |---|---|---|---|---|
 | RNF01 | Modificabilidad del contenido | Agregar o modificar una historia requiere **0 líneas cambiadas** en `src/`, y la historia nueva se juega hasta un final con el mismo comando | 1. Agregar `data/segunda_historia.json` en un commit propio. 2. Ejecutar `git show --stat <commit>` y comprobar que no aparece ningún archivo de `src/`. 3. Ejecutar la prueba de integración de la segunda historia | `evidencias/rnf/rnf01_diff.txt` y resultado de la prueba en `evidencias/pruebas/` |
-| RNF02 | Claridad de los errores | El **100 %** de los 9 archivos inválidos de prueba (V01–V09) se rechaza con un mensaje que contiene (a) el código del error y (b) el ID o campo involucrado | Prueba parametrizada que carga cada archivo de `tests/datos_invalidos/` y verifica con aserciones que el mensaje contiene el código y el ID esperado. Se cuenta cuántos casos cumplen sobre 9 | `evidencias/rnf/rnf02_resultado.txt` (salida de pytest con 9/9) |
+| RNF02 | Claridad de los errores | El **100 %** de los 9 archivos inválidos de prueba (V01–V09) se rechaza con un mensaje que contiene el código del error y la causa, y además el ID o campo involucrado **cuando sea identificable**. En V01, si el archivo no permite recuperar un campo o ID, el mensaje incluye el nombre del archivo y la línea del error cuando el analizador la entrega | Prueba parametrizada que carga cada archivo de `tests/datos_invalidos/` y verifica con aserciones: el código V01–V09 en los 9 casos; el ID o campo esperado en V02–V09; el nombre del archivo en V01. Se cuenta cuántos casos cumplen sobre 9 | `evidencias/rnf/rnf02_resultado.txt` (salida de pytest con 9/9) |esperado. Se cuenta cuántos casos cumplen sobre 9 | `evidencias/rnf/rnf02_resultado.txt` (salida de pytest con 9/9) |
 | RNF03 | Confiabilidad | Ante **1000 entradas inválidas generadas al azar** (semilla fija 2026: ids inexistentes, opciones no habilitadas, texto, números fuera de rango, vacíos), el sistema produce **0 excepciones no controladas** y el estado de la sesión queda **idéntico** al anterior en el 100 % de los casos | Prueba automatizada con `random.Random(2026)` que envía las 1000 entradas a la sesión y compara escena y estado antes y después de cada una | `evidencias/rnf/rnf03_resultado.txt` |
 
 ## 3.6 Preguntas de aclaración y supuestos
@@ -107,5 +107,8 @@ Estos términos se usan igual en requisitos, diagramas y código.
 
 ## 3.7 Revisión cruzada de requisitos
 
-Revisión hecha por **Javier Alejandro Carta Lacharme** sobre los requisitos redactados por Sebastián.
-Revisar en revision_cruzada.md
+Revisión hecha por **Javier Alejandro Carta Lacharme** sobre los requisitos redactados por Sebastián. Detalle completo en `docs/revision_cruzada.md`.
+
+| Requisito revisado | Defecto encontrado | Por qué es un problema | Corrección aplicada |
+|---|---|---|---|
+| RNF02 frente a RF15 y V01 | RNF02 exigía el ID o campo en el 100 % de los errores, pero RF15 lo pide solo "cuando sea identificable", y un archivo ilegible (V01) no tiene ID recuperable | La prueba de RNF02 habría marcado como fallo un validador correcto | RNF02 ahora exige el ID o campo solo cuando sea identificable; para V01 exige el nombre del archivo y la línea del error si existe |
