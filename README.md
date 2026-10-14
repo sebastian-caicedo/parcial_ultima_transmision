@@ -24,14 +24,41 @@ pip install -r requirements.txt
 
 ## Ejecución
 
-_(Pendiente: comando para jugar una historia.)_
+```bash
+# Jugar una historia
+python main.py jugar data/la_ultima_transmision.json
+
+# Validar una historia sin jugarla (muestra todos los errores con su código V01-V09)
+python main.py validar data/la_ultima_transmision.json
+
+# Jugar otra historia con el mismo motor
+python main.py jugar data/segunda_historia.json
+```
+
+Durante la partida: escribe el número de la opción, `r` para reiniciar o `s` para salir.
 
 ## Pruebas
 
 ```bash
-python -m pytest -v
+python -m pytest
 ```
 
+Configuración en `pytest.ini`. Archivos:
+
+| Archivo | Qué cubre |
+|---|---|
+| `tests/test_motor.py` | U1, U2, U3, U5, CA01, CA02, tres finales, bloqueo |
+| `tests/test_validador.py` | U4 (V01–V09), CA03, errores múltiples |
+| `tests/test_integracion.py` | I1 (archivo real + motor + consola), comando validar, segunda historia |
+| `tests/test_rnf.py` | RNF02 (archivos de `tests/datos_invalidos/`) y RNF03 (1000 entradas aleatorias) |
+
+## Rutas para demostrar cada final
+
+| Final | Elecciones (números en consola) |
+|---|---|
+| E4 Rescate | 1 Revisar señal → 1 Investigar archivo → 1 Activar con código |
+| E5 El eco | 1 Revisar señal → 2 Continuar sin investigar → 1 Activar sin verificar |
+| E6 Silencio | 1 Revisar señal → 2 Continuar sin investigar → 2 Cortar comunicación |
 ## Formato de contenido
 
 _(Pendiente: explicación del contrato JSON para la escritora.)_
