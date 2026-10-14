@@ -35,7 +35,7 @@ python main.py validar data/la_ultima_transmision.json
 python main.py jugar data/segunda_historia.json
 ```
 
-Durante la partida: escribe el número de la opción, `r` para reiniciar o `s` para salir.
+Durante la partida: escribe el número de la opción, `r` para reiniciar, `d` para deshacer la última decisión (un solo nivel; aparece solo cuando hay algo que deshacer) o `s` para salir.
 
 ## Pruebas
 
