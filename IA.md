@@ -23,7 +23,7 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
   | 6 | Unidad 2 – Procesos | Redactó comparación incremental vs. cascada | Revisión contra la sección 4 de la guía |
 | 7 | Unidad 3 – Agilidad | Redactó prácticas, alternativa descartada, definición de terminado y aprendizaje | Contraste con el historial real de Git y el tablero |
 | 8 | Unidad 4 – Requerimientos | Redactó RF, RNF, errores V01–V09 y preguntas; revisión cruzada asistida con ChatGPT (Javier) | Cruce con N01–N06 y CA01–CA03; defecto de RNF02 contrastado con RF15 y V01 |
-| 9 | Unidad 5 – Modelado | Generó diagramas de clases, secuencia y estados en PlantUML y su explicación | Nombres iguales al vocabulario de requisitos; RF anotados en cada diagrama |
+| 9 | Unidad 5 – Modelado | Claude generó clases, secuencia y estados (Sebastián); ChatGPT generó contexto y casos de uso (Javier) | Nombres iguales al vocabulario de requisitos; RF anotados; se corrigió "Escritora" → "Escritor" en la revisión de coherencia |
 | 10 | Unidad 6 – Arquitectura | Generó diagrama de capas y dos ADR con alternativas | Dependencias en un solo sentido; nombres de archivo iguales al código |
 | 11 | Unidad 7 – Implementación | Generó motor, validador, consola y pruebas siguiendo los diagramas 03 y 06 | Ejecución de pytest (45 pasan); juego manual de los tres finales |
 | 12 | Pruebas automatizadas | | |
@@ -75,7 +75,14 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 - **Qué se pidió:** contrastar los requisitos de `docs/02_requerimientos.md` para encontrar una ambigüedad o defecto y redactar la observación.
 - **Qué entregó la IA:** apoyo para detectar una inconsistencia entre RF15 (pide el ID o campo "cuando sea identificable") y RNF02 (lo exigía en el 100 % de los casos, incluido V01, donde un archivo ilegible no tiene ID recuperable), y redacción de la corrección propuesta.
 - **Qué se subió:** `docs/revision_cruzada.md` (commit de Javier). La corrección se aplicó en la fila RNF02 y en la sección 3.7 de `docs/02_requerimientos.md`.
-- **Verificación:** se comprobó contra el texto de RF15, el ejemplo de mensaje de V01 en la tabla 3.3 y el criterio de RNF02 que la contradicción existía; se aceptó la corrección y se ajustó el procedimiento de verificación de RNF02 para exigir el nombre del archivo en V01.
+- **Verificación:** se comprobó contra el texto de RF15, el ejemplo de mensaje de V01 en la tabla 3.3 y el criterio de RNF02 que la contradicción existía; se aceptó la corrección y se ajustó el procedimiento de RNF02 para exigir el nombre del archivo en V01. Con el validador implementado, la corrección se verifica automáticamente en `tests/test_rnf.py::test_RNF02_cada_archivo_invalido_tiene_codigo_e_identificador` (caso `V01__no_es_json`), con resultado en `evidencias/rnf/rnf02_resultado.txt`.
+
+### 8. Diagramas de contexto y casos de uso – Javier (`docs/diagramas/01_contexto.*`, `02_casos_de_uso.*`)
+- **Herramienta:** ChatGPT (OpenAI).
+- **Qué se pidió:** elaborar el diagrama de contexto y el de casos de uso del motor en PlantUML, a partir de los requisitos de `docs/02_requerimientos.md`.
+- **Qué entregó la IA:** actores (escritor, lector, sistema de archivos) y sus interacciones; diagrama de casos de uso con ocho casos y relaciones `include` y `extend`; archivos `.puml` y sus imágenes `.png`.
+- **Qué se subió:** los cuatro archivos en `docs/diagramas/` (commit de Javier `T12-T13`). Después de la solicitud de cambio de la hora 6 se agregó el caso "Deshacer última decisión (RF17–RF20)".
+- **Verificación:** se revisó que los actores y casos de uso correspondan al alcance y que cada caso tenga anotados sus RF. En la revisión de coherencia con los diagramas 03–06 se detectó que el actor figuraba como "Escritora" mientras requisitos y demás modelos usan "Escritor"; se unificó a "Escritor" y se agregaron las tildes faltantes.
   
 ### 9. Unidad 5 – Modelado: clases, secuencia y estados – Sebastián (`docs/03_modelado.md`, `docs/diagramas/03_*`, `04_*`, `05_*`)
 - **Herramienta:** Claude (Anthropic).
