@@ -27,7 +27,7 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 | 10 | Unidad 6 – Arquitectura | Generó diagrama de capas y dos ADR con alternativas | Dependencias en un solo sentido; nombres de archivo iguales al código |
 | 11 | Unidad 7 – Implementación | Generó motor, validador, consola y pruebas siguiendo los diagramas 03 y 06 | Ejecución de pytest (45 pasan); juego manual de los tres finales |
 | 12 | Pruebas automatizadas | | |
-| 13 | Solicitud de cambio | | |
+| 13 | Solicitud de cambio | Implementó deshacer en la sesión y la consola, pruebas U6 y análisis de impacto | 57 pruebas pasan; recorrido manual deshaciendo desde un final |
 | 14 | README e informe | | |
 
 ---
@@ -97,3 +97,10 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 - **Qué entregó la IA:** `modelo.py`, `sesion.py`, `validador.py`, `cargador.py`, `consola.py`, `__main__.py`, `main.py`, `pytest.ini` y cuatro archivos de pruebas (U1–U5, I1, CA01–CA03, RNF02, RNF03).
 - **Qué se subió:** todo lo anterior; se eliminó `tests/test_humo.py`.
 - **Verificación:** ejecución local de `python -m pytest` (resultado en `evidencias/pruebas/resultado_v1.txt`); recorrido manual de los tres finales con `python main.py jugar`; búsqueda de IDs de escena en `src/` para confirmar que no hay reglas específicas de la historia.
+
+### 13. Solicitud de cambio (hora 6) – Sebastián (`docs/05_solicitud_cambio.md`, `sesion.py`, `consola.py`, pruebas)
+- **Herramienta:** Claude (Anthropic).
+- **Qué se pidió:** leer el anexo de la hora 6 e implementar el cambio con su análisis de impacto, requisitos, modelos y pruebas.
+- **Qué entregó la IA:** `deshacer()` y `puede_deshacer()` en `Sesion`, comando `d` en la consola, prueba U6 con variantes, U5 e I1 extendidas, diagramas 03–06 actualizados y el documento de impacto con RF17–RF20.
+- **Qué se subió:** todo lo anterior, después de etiquetar `v1.0-pre-cambio`.
+- **Verificación:** se confirmó contra cada regla del anexo (tabla 6.6 del documento) que exista una prueba; ejecución de `python -m pytest` (57 aprobadas, en `evidencias/pruebas/resultado_v2.txt`); juego manual deshaciendo desde E5 y comprobando que el segundo deshacer se rechaza; `git diff v1.0-pre-cambio -- src/motor_historias/modelo.py src/motor_historias/validador.py src/motor_historias/cargador.py` vacío.
