@@ -15,7 +15,7 @@ Parcial práctico de Ingeniería de Software, Universidad Tecnológica de Bolív
 ## Instalación
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
+git clone https://github.com/sebastian-caicedo/parcial_ultima_transmision.git
 cd <carpeta_del_repositorio>
 python -m venv .venv
 # Windows: .venv\Scripts\activate    Linux/macOS: source .venv/bin/activate
