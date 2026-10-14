@@ -1,0 +1,65 @@
+@startuml componentes
+' Diagrama de componentes por capas (T17)
+' Trazabilidad: RF01-RF16, RNF01-RNF03, ADR-01, ADR-02
+title Arquitectura en capas - Motor de historias
+skinparam shadowing false
+skinparam componentStyle rectangle
+top to bottom direction
+
+actor Lector
+actor Escritor
+
+package "Capa de interfaz" #E8F0FE {
+  [Consola\n(consola.py)] as UI
+  note right of UI
+    Muestra escenas y opciones,
+    lee y filtra la entrada (RF09),
+    muestra errores de validación.
+    Comandos: jugar / validar.
+    No conoce reglas de la historia.
+  end note
+}
+
+package "Capa de motor (reglas)" #E6F4EA {
+  [Sesión\n(sesion.py)] as S
+  [Modelo de dominio\n(modelo.py)] as M
+  note right of S
+    Opciones habilitadas, elegir,
+    efectos, destino, final,
+    bloqueo, reinicio (RF02, RF05-RF13).
+    No conoce IDs concretos ni archivos.
+  end note
+}
+
+package "Capa de carga y validación" #FEF7E0 {
+  [Cargador\n(cargador.py)] as C
+  [Validador\n(validador.py)] as V
+  note right of V
+    Detecta V01-V09 y arma los
+    mensajes con código e ID
+    (RF14-RF16). Nunca modifica
+    el archivo.
+  end note
+}
+
+package "Contenido (datos)" #F1F3F4 {
+  file "data/*.json" as J
+}
+
+Lector --> UI : elige
+Escritor --> UI : valida
+Escritor ..> J : edita
+
+UI --> C : cargar(ruta)
+UI --> S : opciones_habilitadas()\nelegir(id) / reiniciar()
+C --> V : validar(datos)
+C --> J : lee (solo lectura)
+C --> M : construye Historia
+S --> M : usa Historia,\nEscena, Opcion
+V ..> M : produce ErrorContenido
+
+note bottom of J
+  Cambiar o agregar una historia
+  solo toca esta capa (RNF01).
+end note
+@enduml
