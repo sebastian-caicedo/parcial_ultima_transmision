@@ -1,0 +1,59 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Asus\AppData\Local\Python\pythoncore-3.14-64\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Asus\parcial_ultima_transmision
+configfile: pytest.ini
+testpaths: tests
+plugins: anyio-4.13.0
+collecting ... collected 48 items
+
+tests/test_integracion.py::test_I1_archivo_real_y_motor_hasta_un_final PASSED [  2%]
+tests/test_integracion.py::test_I1_consola_con_entradas_invalidas_llega_al_final PASSED [  4%]
+tests/test_integracion.py::test_comando_validar_reporta_errores PASSED   [  6%]
+tests/test_integracion.py::test_comando_validar_historia_correcta PASSED [  8%]
+tests/test_integracion.py::test_I2_segunda_historia_funciona_sin_cambiar_el_motor SKIPPED [ 10%]
+tests/test_motor.py::test_U1_condiciones_habilitan_solo_opciones_correspondientes[conoce_origen_verdadero] PASSED [ 12%]
+tests/test_motor.py::test_U1_condiciones_habilitan_solo_opciones_correspondientes[conoce_origen_falso] PASSED [ 14%]
+tests/test_motor.py::test_U1_condiciones_vacias_siempre_habilitan PASSED [ 16%]
+tests/test_motor.py::test_U2_eleccion_valida_aplica_efectos_y_avanza PASSED [ 18%]
+tests/test_motor.py::test_U3_eleccion_invalida_deja_intacto_el_estado[no_habilitada_CA02] PASSED [ 20%]
+tests/test_motor.py::test_U3_eleccion_invalida_deja_intacto_el_estado[inexistente] PASSED [ 22%]
+tests/test_motor.py::test_U3_eleccion_invalida_deja_intacto_el_estado[vacia] PASSED [ 25%]
+tests/test_motor.py::test_U3_eleccion_invalida_deja_intacto_el_estado[none] PASSED [ 27%]
+tests/test_motor.py::test_U3_eleccion_invalida_deja_intacto_el_estado[numero] PASSED [ 29%]
+tests/test_motor.py::test_U3_eleccion_invalida_deja_intacto_el_estado[mayusculas] PASSED [ 31%]
+tests/test_motor.py::test_U3_eleccion_en_escena_final_es_rechazada PASSED [ 33%]
+tests/test_motor.py::test_CA02_activar_sin_verificar_lleva_a_E5 PASSED   [ 35%]
+tests/test_motor.py::test_U5_reiniciar_restaura_escena_y_variables PASSED [ 37%]
+tests/test_motor.py::test_los_tres_finales_son_alcanzables[rescate] PASSED [ 39%]
+tests/test_motor.py::test_los_tres_finales_son_alcanzables[eco] PASSED   [ 41%]
+tests/test_motor.py::test_los_tres_finales_son_alcanzables[silencio] PASSED [ 43%]
+tests/test_motor.py::test_escena_no_final_sin_opciones_habilitadas_se_reporta_bloqueada PASSED [ 45%]
+tests/test_rnf.py::test_RNF02_cada_archivo_invalido_tiene_codigo_e_identificador[NOTSET] SKIPPED [ 47%]
+tests/test_rnf.py::test_RNF02_estan_las_nueve_categorias SKIPPED (Pe...) [ 50%]
+tests/test_rnf.py::test_RNF03_1000_entradas_invalidas_sin_fallos_ni_cambios PASSED [ 52%]
+tests/test_validador.py::test_U4_error_de_contenido_produce_rechazo_controlado[quitar_titulo-V02-titulo] PASSED [ 54%]
+tests/test_validador.py::test_U4_error_de_contenido_produce_rechazo_controlado[quitar_destino-V02-destino] PASSED [ 56%]
+tests/test_validador.py::test_U4_error_de_contenido_produce_rechazo_controlado[escenas_no_es_lista-V02-escenas] PASSED [ 58%]
+tests/test_validador.py::test_U4_error_de_contenido_produce_rechazo_controlado[inicio_inexistente-V03-E0] PASSED [ 60%]
+tests/test_validador.py::test_U4_error_de_contenido_produce_rechazo_controlado[escena_repetida-V04-E6] PASSED [ 62%]
+tests/test_validador.py::test_U4_error_de_contenido_produce_rechazo_controlado[opcion_repetida-V05-cortar] PASSED [ 64%]
+tests/test_validador.py::test_U4_error_de_contenido_produce_rechazo_controlado[destino_inexistente-V06-E99] PASSED [ 66%]
+tests/test_validador.py::test_U4_error_de_contenido_produce_rechazo_controlado[variable_no_declarada_efecto-V07-conoce_orgen] PASSED [ 68%]
+tests/test_validador.py::test_U4_error_de_contenido_produce_rechazo_controlado[variable_no_declarada_condicion-V07-sabe] PASSED [ 70%]
+tests/test_validador.py::test_U4_error_de_contenido_produce_rechazo_controlado[no_booleano_condicion-V08-conoce_origen] PASSED [ 72%]
+tests/test_validador.py::test_U4_error_de_contenido_produce_rechazo_controlado[no_booleano_efecto-V08-conoce_origen] PASSED [ 75%]
+tests/test_validador.py::test_U4_error_de_contenido_produce_rechazo_controlado[no_booleano_variable-V08-conoce_origen] PASSED [ 77%]
+tests/test_validador.py::test_U4_error_de_contenido_produce_rechazo_controlado[final_con_opciones-V09-E4] PASSED [ 79%]
+tests/test_validador.py::test_U4_error_de_contenido_produce_rechazo_controlado[no_final_sin_opciones-V09-E1] PASSED [ 81%]
+tests/test_validador.py::test_U4_V01_archivo_ilegible[cortado] PASSED    [ 83%]
+tests/test_validador.py::test_U4_V01_archivo_ilegible[texto] PASSED      [ 85%]
+tests/test_validador.py::test_U4_V01_archivo_ilegible[vacio] PASSED      [ 87%]
+tests/test_validador.py::test_U4_V01_raiz_no_es_objeto PASSED            [ 89%]
+tests/test_validador.py::test_U4_V01_archivo_inexistente PASSED          [ 91%]
+tests/test_validador.py::test_CA03_destino_E99_rechaza_la_carga_sin_sesion PASSED [ 93%]
+tests/test_validador.py::test_varios_errores_se_reportan_juntos PASSED   [ 95%]
+tests/test_validador.py::test_historia_de_referencia_es_valida PASSED    [ 97%]
+tests/test_validador.py::test_validar_no_modifica_los_datos PASSED       [100%]
+
+======================== 45 passed, 3 skipped in 0.09s ========================
