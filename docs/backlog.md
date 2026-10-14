@@ -41,3 +41,4 @@ Responsable: **SC** = Sebastián · **JC** = Javier.
 | T34 | Captura final del tablero y exportación de `git log` | 3 | A | JC |
 | T35 | Armar ZIP, verificar y subir | — | A | JC |
 | T36 | Aprendizaje y acción de mejora | 3 | M | SC + JC |
+| T37 | Actualizar requisitos (RF17–RF20, P1), alcance y casos de uso por el cambio | — | A | SC + JC |
