@@ -1,4 +1,4 @@
-"""Interfaz de consola (RF04, RF09, RF11, RF13).
+"""Interfaz de consola (RF04, RF09, RF11, RF13, RF17).
 
 Capa de interfaz (ver docs/04_arquitectura.md). Solo muestra y traduce la entrada
 del lector a ids de opción; todas las reglas las decide la Sesion.
@@ -49,30 +49,44 @@ class InterfazConsola:
         opciones = self.sesion.opciones_habilitadas()
         for numero, opcion in enumerate(opciones, start=1):
             self._salida(f"  {numero}) {opcion.texto}")
-        self._salida("  r) Reiniciar   s) Salir")
+        self._salida(self._linea_comandos())
 
         while True:
             texto = self._leer("Elige una opción: ")
             if texto is None or texto == "s":
                 return False
-            if texto == "r":
-                self.sesion.reiniciar()
-                self._salida("Partida reiniciada.")
-                return True
+            if texto in ("r", "d"):
+                return self._comando(texto)
             if texto.isdigit() and 1 <= int(texto) <= len(opciones):
                 resultado = self.sesion.elegir(opciones[int(texto) - 1].id)
                 if not resultado.aceptada:
                     self._salida(f"No se pudo elegir: {resultado.motivo}")
                 return True
-            self._salida(f"Entrada no válida. Escribe un número del 1 al {len(opciones)}, 'r' o 's'.")
+            self._salida(f"Entrada no válida. Escribe un número del 1 al {len(opciones)} o una letra del menú.")
+
+    def _linea_comandos(self) -> str:
+        comandos = "  r) Reiniciar   s) Salir"
+        if self.sesion.puede_deshacer():
+            comandos += "   d) Deshacer última decisión"
+        return comandos
+
+    def _comando(self, texto: str) -> bool:
+        """Ejecuta 'r' (reiniciar) o 'd' (deshacer). Siempre continúa la partida."""
+        if texto == "r":
+            self.sesion.reiniciar()
+            self._salida("Partida reiniciada.")
+        else:
+            resultado = self.sesion.deshacer()
+            self._salida("Última decisión deshecha." if resultado.aceptada
+                         else f"No se pudo deshacer: {resultado.motivo}")
+        return True
 
     def _menu_cierre(self) -> bool:
+        self._salida(self._linea_comandos())
         while True:
-            texto = self._leer("r) Jugar otra vez   s) Salir: ")
+            texto = self._leer("Elige: ")
             if texto is None or texto == "s":
                 return False
-            if texto == "r":
-                self.sesion.reiniciar()
-                self._salida("Nueva partida.")
-                return True
-            self._salida("Entrada no válida. Escribe 'r' o 's'.")
+            if texto in ("r", "d"):
+                return self._comando(texto)
+            self._salida("Entrada no válida. Escribe una letra del menú.")

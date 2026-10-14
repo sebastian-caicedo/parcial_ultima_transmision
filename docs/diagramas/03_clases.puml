@@ -1,6 +1,6 @@
 @startuml clases
 ' Diagrama de clases del dominio (T14)
-' Trazabilidad: RF02, RF05, RF06, RF07, RF08, RF10, RF11, RF12, RF13, RF15, RF16
+' Trazabilidad: RF02, RF05-RF08, RF10-RF13, RF15-RF20 (RF17-RF20: cambio hora 6)
 title Clases del dominio - Motor de historias
 skinparam classAttributeIconSize 0
 skinparam shadowing false
@@ -35,12 +35,15 @@ class Opcion {
 class Sesion {
   - escena_actual : Escena
   - estado : dict[str, bool]
+  - anterior : (Escena, dict[str, bool]) | None
   --
   + opciones_habilitadas() : list[Opcion]
   + elegir(id_opcion : str) : ResultadoEleccion
   + esta_en_final() : bool
   + esta_bloqueada() : bool
   + reiniciar() : None
+  + deshacer() : ResultadoEleccion
+  + puede_deshacer() : bool
 }
 
 class ResultadoEleccion <<inmutable>> {
@@ -76,6 +79,8 @@ note bottom of Sesion
   Final: escena_actual.final = verdadero.
   Bloqueada: no final y sin opciones habilitadas.
   Una elección rechazada no cambia escena ni estado.
+  anterior: copia previa a la última elección válida
+  (un solo nivel; None al iniciar, reiniciar o deshacer).
 end note
 
 note bottom of ErrorContenido

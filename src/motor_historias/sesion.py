@@ -14,6 +14,9 @@ class Sesion:
         self._historia = historia
         self._escena: Escena
         self._estado: dict[str, bool]
+        # Cambio hora 6 (RF17-RF20): copia de escena y estado ANTES de la última
+        # elección válida. Un solo nivel: None significa que no hay retroceso disponible.
+        self._anterior: tuple[Escena, dict[str, bool]] | None = None
         self.reiniciar()
 
     # ----- Consultas -----
@@ -42,6 +45,10 @@ class Sesion:
         """Escena no final sin ninguna opción habilitada (RF13)."""
         return not self._escena.final and not self.opciones_habilitadas()
 
+    def puede_deshacer(self) -> bool:
+        """Hay una elección válida que todavía no se ha deshecho (RF18, RF19)."""
+        return self._anterior is not None
+
     # ----- Comandos -----
     def elegir(self, id_opcion: object) -> ResultadoEleccion:
         """Aplica la opción si existe y está habilitada (RF06, RF07).
@@ -63,11 +70,27 @@ class Sesion:
                 False, f"La opción '{id_opcion}' no está habilitada con la información actual."
             )
 
+        # Solo una elección válida reemplaza el punto de retroceso (RF20)
+        self._anterior = (self._escena, dict(self._estado))
         self._estado.update(opcion.efectos)
         self._escena = self._historia.escena(opcion.destino)
         return ResultadoEleccion(True)
 
+    def deshacer(self) -> ResultadoEleccion:
+        """Revierte la última elección válida: escena y TODAS las variables (RF17).
+
+        Un solo nivel: después de deshacer no hay otro retroceso hasta una nueva
+        elección válida (RF18). Funciona también desde un final o un bloqueo.
+        """
+        if self._anterior is None:
+            return ResultadoEleccion(False, "No hay una decisión que deshacer.")
+        self._escena, estado = self._anterior
+        self._estado = dict(estado)
+        self._anterior = None
+        return ResultadoEleccion(True)
+
     def reiniciar(self) -> None:
-        """Vuelve a la escena de inicio con las variables iniciales (RF12)."""
+        """Vuelve a la escena de inicio con las variables iniciales y borra el historial (RF12, RF19)."""
         self._escena = self._historia.escena(self._historia.inicio)
         self._estado = dict(self._historia.variables_iniciales)
+        self._anterior = None

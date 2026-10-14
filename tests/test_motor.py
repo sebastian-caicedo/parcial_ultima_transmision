@@ -1,4 +1,4 @@
-"""Pruebas unitarias del motor: U1, U2, U3, U5, finales y bloqueo."""
+"""Pruebas unitarias del motor: U1, U2, U3, U5, U6 (cambio hora 6), finales y bloqueo."""
 import pytest
 
 from motor_historias.cargador import construir_historia
@@ -89,6 +89,10 @@ def test_U5_reiniciar_restaura_escena_y_variables(sesion):
     assert sesion.escena_actual.id == "E1"
     assert sesion.estado == {"conoce_origen": False, "confia_en_la_voz": False}
     assert not sesion.esta_en_final()
+    # Extensión del cambio (RF19): reiniciar elimina el historial
+    assert not sesion.puede_deshacer()
+    assert not sesion.deshacer().aceptada
+    assert sesion.escena_actual.id == "E1"
 
 
 # ---------- Finales (RF11) ----------
@@ -129,3 +133,107 @@ def test_escena_no_final_sin_opciones_habilitadas_se_reporta_bloqueada():
     assert not sesion.esta_en_final()
     sesion.reiniciar()
     assert sesion.escena_actual.id == "A" and not sesion.esta_bloqueada()
+
+
+# ---------- U6 (cambio hora 6): deshacer la última decisión (RF17-RF20) ----------
+def _ir_a_E3_investigando(sesion):
+    sesion.elegir("revisar_senal")
+    sesion.elegir("investigar")
+    assert sesion.escena_actual.id == "E3" and sesion.estado["conoce_origen"] is True
+
+
+def test_U6_deshacer_restaura_escena_y_variables_y_consume_el_retroceso(sesion):
+    """Ejemplo del anexo: E2 -investigar-> E3; deshacer vuelve a E2 con conoce_origen falso."""
+    _ir_a_E3_investigando(sesion)
+
+    resultado = sesion.deshacer()
+
+    assert resultado.aceptada
+    assert sesion.escena_actual.id == "E2"
+    assert sesion.estado == {"conoce_origen": False, "confia_en_la_voz": False}
+    # Un solo nivel: el segundo intento no cambia nada
+    assert not sesion.puede_deshacer()
+    segundo = sesion.deshacer()
+    assert not segundo.aceptada and segundo.motivo
+    assert sesion.escena_actual.id == "E2"
+    assert sesion.estado == {"conoce_origen": False, "confia_en_la_voz": False}
+    # Al continuar sin investigar, E3 muestra las opciones de "sin conocer el origen"
+    sesion.elegir("continuar")
+    assert textos(sesion.opciones_habilitadas()) == ["Activar sin verificar", "Cortar comunicación"]
+
+
+@pytest.mark.parametrize(
+    "entrada_invalida",
+    ["activar_sin_verificar", "xyz", "", None],
+    ids=["no_habilitada", "inexistente", "vacia", "none"],
+)
+def test_U6_entrada_invalida_preserva_el_historial(sesion, entrada_invalida):
+    _ir_a_E3_investigando(sesion)
+
+    assert not sesion.elegir(entrada_invalida).aceptada
+
+    assert sesion.puede_deshacer()
+    assert sesion.deshacer().aceptada
+    assert sesion.escena_actual.id == "E2"          # se deshace "investigar", no la entrada inválida
+    assert sesion.estado["conoce_origen"] is False
+
+
+def test_U6_nueva_eleccion_vuelve_a_habilitar_el_retroceso(sesion):
+    _ir_a_E3_investigando(sesion)
+    sesion.deshacer()
+    assert not sesion.puede_deshacer()
+
+    assert sesion.elegir("continuar").aceptada
+
+    assert sesion.puede_deshacer()
+    assert sesion.deshacer().aceptada
+    assert sesion.escena_actual.id == "E2"
+
+
+def test_U6_al_comenzar_no_hay_retroceso(sesion):
+    assert not sesion.puede_deshacer()
+    resultado = sesion.deshacer()
+    assert not resultado.aceptada
+    assert sesion.escena_actual.id == "E1"
+    assert sesion.estado == {"conoce_origen": False, "confia_en_la_voz": False}
+
+
+@pytest.mark.parametrize(
+    "ruta, estado_en_E3",
+    [
+        (["revisar_senal", "investigar", "activar_con_codigo"], {"conoce_origen": True, "confia_en_la_voz": False}),
+        (["revisar_senal", "continuar", "activar_sin_verificar"], {"conoce_origen": False, "confia_en_la_voz": False}),
+        (["revisar_senal", "continuar", "cortar"], {"conoce_origen": False, "confia_en_la_voz": False}),
+    ],
+    ids=["desde_E4", "desde_E5", "desde_E6"],
+)
+def test_U6_deshacer_desde_un_final_vuelve_a_E3(sesion, ruta, estado_en_E3):
+    for id_opcion in ruta:
+        sesion.elegir(id_opcion)
+    assert sesion.esta_en_final()
+
+    assert sesion.deshacer().aceptada
+
+    assert sesion.escena_actual.id == "E3"
+    assert sesion.estado == estado_en_E3
+    assert not sesion.esta_en_final()
+
+
+def test_U6_deshacer_desde_un_bloqueo():
+    datos = {
+        "titulo": "Bloqueo", "inicio": "A", "variables": {"llave": False},
+        "escenas": [
+            {"id": "A", "texto": "Inicio", "final": False, "opciones": [
+                {"id": "ir", "texto": "Ir", "destino": "B", "condiciones": {}, "efectos": {}}]},
+            {"id": "B", "texto": "Puerta", "final": False, "opciones": [
+                {"id": "abrir", "texto": "Abrir", "destino": "C",
+                 "condiciones": {"llave": True}, "efectos": {}}]},
+            {"id": "C", "texto": "Fin", "final": True, "opciones": []},
+        ],
+    }
+    sesion = Sesion(construir_historia(datos))
+    sesion.elegir("ir")
+    assert sesion.esta_bloqueada()
+
+    assert sesion.deshacer().aceptada
+    assert sesion.escena_actual.id == "A"

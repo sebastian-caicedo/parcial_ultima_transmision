@@ -16,6 +16,7 @@ package "Capa de interfaz" #E8F0FE {
     lee y filtra la entrada (RF09),
     muestra errores de validación.
     Comandos: jugar / validar.
+    En partida: número, r, s, d (deshacer).
     No conoce reglas de la historia.
   end note
 }
@@ -26,7 +27,8 @@ package "Capa de motor (reglas)" #E6F4EA {
   note right of S
     Opciones habilitadas, elegir,
     efectos, destino, final,
-    bloqueo, reinicio (RF02, RF05-RF13).
+    bloqueo, reinicio (RF02, RF05-RF13),
+    deshacer un nivel (RF17-RF20).
     No conoce IDs concretos ni archivos.
   end note
 }
@@ -51,7 +53,7 @@ Escritor --> UI : valida
 Escritor ..> J : edita
 
 UI --> C : cargar(ruta)
-UI --> S : opciones_habilitadas()\nelegir(id) / reiniciar()
+UI --> S : opciones_habilitadas()\nelegir(id) / reiniciar()\ndeshacer()
 C --> V : validar(datos)
 C --> J : lee (solo lectura)
 C --> M : construye Historia

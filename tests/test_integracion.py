@@ -22,6 +22,12 @@ def test_I1_archivo_real_y_motor_hasta_un_final():
     assert sesion.escena_actual.id == "E4"
     assert sesion.esta_en_final()
 
+    # Extensión del cambio (RF17): deshacer desde el final regresa a E3 con los valores previos
+    assert sesion.deshacer().aceptada
+    assert sesion.escena_actual.id == "E3"
+    assert sesion.estado == {"conoce_origen": True, "confia_en_la_voz": False}
+    assert not sesion.deshacer().aceptada            # un solo nivel
+
 
 def _jugar_por_consola(ruta, entradas):
     """Ejecuta la consola real con entradas simuladas y devuelve lo que imprimió."""
@@ -39,6 +45,14 @@ def test_I1_consola_con_entradas_invalidas_llega_al_final():
     assert texto.count("Entrada no válida") == 2
     assert "FIN DE LA PARTIDA" in texto
     assert sesion.escena_actual.id == "E4"
+
+
+def test_I1_consola_deshacer_desde_el_final():
+    # 1,1,1 -> E4 ; d -> E3 ; 2 (cortar) -> E6 ; s
+    sesion, texto = _jugar_por_consola(HISTORIA_REFERENCIA, ["1", "1", "1", "d", "2", "s"])
+
+    assert "Última decisión deshecha." in texto
+    assert sesion.escena_actual.id == "E6"
 
 
 def test_comando_validar_reporta_errores(tmp_path, capsys):

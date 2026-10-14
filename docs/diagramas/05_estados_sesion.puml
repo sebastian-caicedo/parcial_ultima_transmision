@@ -1,11 +1,11 @@
 @startuml estados_sesion
 ' Diagrama de estados de una sesión (T16)
-' Trazabilidad: RF02, RF08, RF11, RF12, RF13
+' Trazabilidad: RF02, RF08, RF11-RF13, RF17-RF20 (cambio hora 6)
 title Estados de una sesión
 skinparam shadowing false
 hide empty description
 
-[*] --> Evaluando : historia válida cargada /\nescena = inicio, estado = variables iniciales (RF02)
+[*] --> Evaluando : historia válida cargada /\nescena = inicio, estado = variables iniciales,\nsin retroceso (RF02, RF19)
 
 state Evaluando <<choice>>
 
@@ -14,11 +14,15 @@ Evaluando --> Finalizada : [escena final] (RF11)
 Evaluando --> Bloqueada : [escena no final y\nninguna opción habilitada] (RF13)
 
 EnCurso --> EnCurso : elegir(opción inexistente\no no habilitada) /\nrechazo, sin cambios (RF08)
-EnCurso --> Evaluando : elegir(opción habilitada) /\naplicar efectos, ir a destino
+EnCurso --> Evaluando : elegir(opción habilitada) /\nguardar anterior, aplicar efectos,\nir a destino
 
-Finalizada --> Evaluando : reiniciar() (RF12)
-Bloqueada --> Evaluando : reiniciar() (RF12)
-EnCurso --> Evaluando : reiniciar() (RF12)
+Finalizada --> Evaluando : reiniciar() /\nborrar historial (RF12, RF19)
+Bloqueada --> Evaluando : reiniciar() (RF12, RF19)
+EnCurso --> Evaluando : reiniciar() (RF12, RF19)
+
+Finalizada --> Evaluando : deshacer() [hay anterior] /\nrestaurar escena y variables,\nanterior = vacío (RF17, RF18)
+Bloqueada --> Evaluando : deshacer() [hay anterior] (RF17)
+EnCurso --> Evaluando : deshacer() [hay anterior] (RF17)
 
 Finalizada --> [*] : salir
 Bloqueada --> [*] : salir
@@ -26,6 +30,8 @@ EnCurso --> [*] : salir
 
 note right of Finalizada
   Sin opciones de avance.
-  Solo reiniciar o salir.
+  Reiniciar, deshacer o salir.
 end note
+
+note "deshacer() [sin anterior]:\nse rechaza y nada cambia (RF18)" as N1
 @enduml
