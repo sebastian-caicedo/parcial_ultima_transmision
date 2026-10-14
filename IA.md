@@ -64,7 +64,7 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 - **Qué se subió:** el documento en `docs/`.
 - **Verificación:** contraste con las voces del cliente (sección 1 de la guía) y con los subcriterios de la rúbrica "Problema y calidad".
 
-### 8. Unidad 4 – Requerimientos (`docs/02_requerimientos.md`)
+### 6. Unidad 4 – Requerimientos (`docs/02_requerimientos.md`)
 - **Qué se pidió:** RF atómicos con criterio de aceptación para N01–N06, tres RNF medibles, tres preguntas con respuesta o supuesto.
 - **Qué entregó la IA:** vocabulario común, 16 RF (RF01–RF16) con criterios que incluyen CA01, CA02 y CA03, tabla de errores V01–V09, trazabilidad necesidad → requisito, tres RNF (modificabilidad, claridad de errores, confiabilidad) con procedimiento y evidencia, y preguntas P1 (retroceso, con acuerdo provisional), P2 (errores múltiples) y P3 (escenas inalcanzables).
 - **Qué se subió:** el documento en `docs/`. La sección 3.7 (revisión cruzada) la completa Javier sin IA.
