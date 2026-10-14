@@ -25,7 +25,7 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 | 8 | Unidad 4 – Requerimientos | Redactó RF, RNF, errores V01–V09 y preguntas; revisión cruzada asistida con ChatGPT (Javier) | Cruce con N01–N06 y CA01–CA03; defecto de RNF02 contrastado con RF15 y V01 |
 | 9 | Unidad 5 – Modelado | Generó diagramas de clases, secuencia y estados en PlantUML y su explicación | Nombres iguales al vocabulario de requisitos; RF anotados en cada diagrama |
 | 10 | Unidad 6 – Arquitectura | Generó diagrama de capas y dos ADR con alternativas | Dependencias en un solo sentido; nombres de archivo iguales al código |
-| 11 | Unidad 7 – Implementación | | |
+| 11 | Unidad 7 – Implementación | Generó motor, validador, consola y pruebas siguiendo los diagramas 03 y 06 | Ejecución de pytest (45 pasan); juego manual de los tres finales |
 | 12 | Pruebas automatizadas | | |
 | 13 | Solicitud de cambio | | |
 | 14 | README e informe | | |
@@ -90,3 +90,10 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 - **Qué entregó la IA:** diagrama PlantUML de cuatro capas (interfaz, motor, carga y validación, contenido), tabla de responsabilidades por archivo, tabla de separación, ADR-01 (capas con contenido como datos) y ADR-02 (validación completa antes de crear la sesión).
 - **Qué se subió:** `docs/04_arquitectura.md` y `docs/diagramas/06_componentes.puml` / `.png`.
 - **Verificación:** se comprobó que cada componente del diagrama corresponda a una clase del diagrama de clases (03) y a los RF que atiende, que ninguna flecha vaya del motor hacia la interfaz o la carga, y que las alternativas de cada ADR sean opciones reales para este caso. La separación se verificará con la segunda historia (RNF01).
+
+### 11. Unidad 7 – Implementación v1 – Sebastián (`src/`, `main.py`, `tests/`)
+- **Herramienta:** Claude (Anthropic).
+- **Qué se pidió:** implementar el motor según los requisitos y los diagramas de clases y capas, con las pruebas U1–U5 e I1.
+- **Qué entregó la IA:** `modelo.py`, `sesion.py`, `validador.py`, `cargador.py`, `consola.py`, `__main__.py`, `main.py`, `pytest.ini` y cuatro archivos de pruebas (U1–U5, I1, CA01–CA03, RNF02, RNF03).
+- **Qué se subió:** todo lo anterior; se eliminó `tests/test_humo.py`.
+- **Verificación:** ejecución local de `python -m pytest` (resultado en `evidencias/pruebas/resultado_v1.txt`); recorrido manual de los tres finales con `python main.py jugar`; búsqueda de IDs de escena en `src/` para confirmar que no hay reglas específicas de la historia.
