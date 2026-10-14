@@ -21,7 +21,7 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 | 4 | Tablero | Generó scripts para crearlo; fallaron | Tablero hecho a mano; scripts descartados |
 | 5 | Unidad 1 – Fundamentos | Redactó borrador de problema, riesgos y calidad | Revisión contra rúbrica y voces del cliente |
   | 6 | Unidad 2 – Procesos | Redactó comparación incremental vs. cascada | Revisión contra la sección 4 de la guía |
-| 7 | Unidad 3 – Agilidad | | |
+| 7 | Unidad 3 – Agilidad | Redactó prácticas, alternativa descartada, definición de terminado y aprendizaje | Contraste con el historial real de Git y el tablero |
 | 8 | Unidad 4 – Requerimientos | Redactó RF, RNF, errores V01–V09 y preguntas; revisión cruzada asistida con ChatGPT (Javier) | Cruce con N01–N06 y CA01–CA03; defecto de RNF02 contrastado con RF15 y V01 |
 | 9 | Unidad 5 – Modelado | Generó diagramas de clases, secuencia y estados en PlantUML y su explicación | Nombres iguales al vocabulario de requisitos; RF anotados en cada diagrama |
 | 10 | Unidad 6 – Arquitectura | Generó diagrama de capas y dos ADR con alternativas | Dependencias en un solo sentido; nombres de archivo iguales al código |
@@ -104,3 +104,10 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 - **Qué entregó la IA:** `deshacer()` y `puede_deshacer()` en `Sesion`, comando `d` en la consola, prueba U6 con variantes, U5 e I1 extendidas, diagramas 03–06 actualizados y el documento de impacto con RF17–RF20.
 - **Qué se subió:** todo lo anterior, después de etiquetar `v1.0-pre-cambio`.
 - **Verificación:** se confirmó contra cada regla del anexo (tabla 6.6 del documento) que exista una prueba; ejecución de `python -m pytest` (57 aprobadas, en `evidencias/pruebas/resultado_v2.txt`); juego manual deshaciendo desde E5 y comprobando que el segundo deshacer se rechaza; `git diff v1.0-pre-cambio -- src/motor_historias/modelo.py src/motor_historias/validador.py src/motor_historias/cargador.py` vacío.
+
+### 14. Unidad 3, trazabilidad y verificación de RNF – Sebastián (`docs/06_agilidad.md`, `docs/07_trazabilidad.md`, `scripts/verificar_rnf.py`)
+- **Herramienta:** Claude (Anthropic).
+- **Qué se pidió:** la unidad 3 (prácticas, alternativa descartada, definición de terminado, aprendizaje), la matriz RF/RNF → modelos → archivos → evidencia, y un procedimiento reproducible para verificar los tres RNF.
+- **Qué entregó la IA:** los dos documentos y el script que genera `evidencias/rnf/rnf01_resultado.txt`, `rnf02_resultado.txt` y `rnf03_resultado.txt`.
+- **Qué se subió:** los tres archivos y las evidencias generadas al ejecutar el script.
+- **Verificación:** cada nombre de prueba de la matriz se comprobó contra `python -m pytest --collect-only`; el aprendizaje se contrastó con los commits reales sin ID de tarea; el script se ejecutó localmente y sus resultados quedaron en `evidencias/rnf/`.
