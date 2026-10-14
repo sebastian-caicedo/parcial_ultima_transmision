@@ -20,11 +20,11 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 | 3 | Backlog y división del trabajo | Propuso backlog de 36 tareas y reparto | Cada actividad de la sección 4 tiene tarea |
 | 4 | Tablero | Generó scripts para crearlo; fallaron | Tablero hecho a mano; scripts descartados |
 | 5 | Unidad 1 – Fundamentos | Redactó borrador de problema, riesgos y calidad | Revisión contra rúbrica y voces del cliente |
-| 6 | Unidad 2 – Procesos | Redactó comparación incremental vs. cascada | Revisión contra la sección 4 de la guía |
+| 6 | Unidad 2 – Procesos | | |
 | 7 | Unidad 3 – Agilidad | | |
-| 8 | Unidad 4 – Requerimientos | Redactó RF, RNF, errores V01–V09 y preguntas | Cruce con N01–N06 y CA01–CA03 |
-| 9 | Unidad 5 – Modelado | | |
-| 10 | Unidad 6 – Arquitectura | | |
+| 8 | Unidad 4 – Requerimientos | Redactó RF, RNF, errores V01–V09 y preguntas; revisión cruzada asistida con ChatGPT (Javier) | Cruce con N01–N06 y CA01–CA03; defecto de RNF02 contrastado con RF15 y V01 |
+| 9 | Unidad 5 – Modelado | Generó diagramas de clases, secuencia y estados en PlantUML y su explicación | Nombres iguales al vocabulario de requisitos; RF anotados en cada diagrama |
+| 10 | Unidad 6 – Arquitectura | Generó diagrama de capas y dos ADR con alternativas | Dependencias en un solo sentido; nombres de archivo iguales al código |
 | 11 | Unidad 7 – Implementación | | |
 | 12 | Pruebas automatizadas | | |
 | 13 | Solicitud de cambio | | |
@@ -69,3 +69,24 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 - **Qué entregó la IA:** vocabulario común, 16 RF (RF01–RF16) con criterios que incluyen CA01, CA02 y CA03, tabla de errores V01–V09, trazabilidad necesidad → requisito, tres RNF (modificabilidad, claridad de errores, confiabilidad) con procedimiento y evidencia, y preguntas P1 (retroceso, con acuerdo provisional), P2 (errores múltiples) y P3 (escenas inalcanzables).
 - **Qué se subió:** el documento en `docs/`. La sección 3.7 (revisión cruzada) la completa Javier sin IA.
 - **Verificación:** cruce de cada necesidad N01–N06 con al menos un RF, comprobación de que CA01–CA03 aparecen literalmente en los criterios, y de que las nueve categorías de error de la sección 5 de la guía están en V01–V09.
+
+### 7. Revisión cruzada de requisitos – Javier (`docs/revision_cruzada.md`)
+- **Herramienta:** ChatGPT (OpenAI).
+- **Qué se pidió:** contrastar los requisitos de `docs/02_requerimientos.md` para encontrar una ambigüedad o defecto y redactar la observación.
+- **Qué entregó la IA:** apoyo para detectar una inconsistencia entre RF15 (pide el ID o campo "cuando sea identificable") y RNF02 (lo exigía en el 100 % de los casos, incluido V01, donde un archivo ilegible no tiene ID recuperable), y redacción de la corrección propuesta.
+- **Qué se subió:** `docs/revision_cruzada.md` (commit de Javier). La corrección se aplicó en la fila RNF02 y en la sección 3.7 de `docs/02_requerimientos.md`.
+- **Verificación:** se comprobó contra el texto de RF15, el ejemplo de mensaje de V01 en la tabla 3.3 y el criterio de RNF02 que la contradicción existía; se aceptó la corrección y se ajustó el procedimiento de verificación de RNF02 para exigir el nombre del archivo en V01.
+  
+### 9. Unidad 5 – Modelado: clases, secuencia y estados – Sebastián (`docs/03_modelado.md`, `docs/diagramas/03_*`, `04_*`, `05_*`)
+- **Herramienta:** Claude (Anthropic).
+- **Qué se pidió:** los diagramas de clases del dominio, secuencia de elegir una opción y estados de una sesión, pequeños y legibles, coherentes con los requisitos.
+- **Qué entregó la IA:** fuentes PlantUML (`.puml`) y sus imágenes (`.png`) de los tres diagramas, más `docs/03_modelado.md` con la tabla de modelos, los RF que cubre cada uno y cuatro decisiones de modelado: validación antes de crear la sesión, rechazo de elecciones sin excepciones (`ResultadoEleccion`), regla de habilitación dentro de `Opcion` y doble filtro de la elección (interfaz y motor).
+- **Qué se subió:** los seis archivos en `docs/diagramas/` y `docs/03_modelado.md`.
+- **Verificación:** revisión de que las clases y mensajes usen los términos de la sección 3.1 de requisitos (historia, escena, opción, condición, efecto, estado, sesión); que cada RF anotado exista en `docs/02_requerimientos.md`; que la secuencia incluya el rechazo de CA02 (opción no habilitada enviada directamente al motor); y que los estados incluyan final (RF11), bloqueo (RF13) y reinicio (RF12). Las imágenes se regeneraron desde los `.puml` para confirmar que el texto fuente y la imagen coinciden.
+
+### 10. Unidad 6 – Arquitectura – Sebastián (`docs/04_arquitectura.md`, `docs/diagramas/06_componentes.*`)
+- **Herramienta:** Claude (Anthropic).
+- **Qué se pidió:** diagrama de componentes o capas con responsabilidades y relaciones, dos decisiones de arquitectura con contexto, alternativas, elección y consecuencias, y la justificación de la separación entre contenido, reglas e interfaz.
+- **Qué entregó la IA:** diagrama PlantUML de cuatro capas (interfaz, motor, carga y validación, contenido), tabla de responsabilidades por archivo, tabla de separación, ADR-01 (capas con contenido como datos) y ADR-02 (validación completa antes de crear la sesión).
+- **Qué se subió:** `docs/04_arquitectura.md` y `docs/diagramas/06_componentes.puml` / `.png`.
+- **Verificación:** se comprobó que cada componente del diagrama corresponda a una clase del diagrama de clases (03) y a los RF que atiende, que ninguna flecha vaya del motor hacia la interfaz o la carga, y que las alternativas de cada ADR sean opciones reales para este caso. La separación se verificará con la segunda historia (RNF01).
