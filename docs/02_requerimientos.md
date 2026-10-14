@@ -107,10 +107,5 @@ Estos términos se usan igual en requisitos, diagramas y código.
 
 ## 3.7 Revisión cruzada de requisitos
 
-_(Completa Javier, T11.)_
-
 Revisión hecha por **Javier Alejandro Carta Lacharme** sobre los requisitos redactados por Sebastián.
-
-| Requisito revisado | Defecto o ambigüedad encontrada | Por qué es un problema | Corrección aplicada |
-|---|---|---|---|
-| | | | |
+Revisar en revision_cruzada.md
