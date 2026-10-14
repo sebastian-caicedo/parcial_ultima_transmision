@@ -9,17 +9,15 @@ Parcial práctico de Ingeniería de Software, Universidad Tecnológica de Bolív
 
 ## Versiones requeridas
 
-- Python 3.10 o superior
-- pytest 8 o superior (ver `requirements.txt`)
+- Python 3.10 o superior (probado en Python 3.14 en Windows)
+- pytest 8 o superior (única dependencia externa, solo para pruebas; licencia MIT)
 
 ## Instalación
 
 ```bash
 git clone https://github.com/sebastian-caicedo/parcial_ultima_transmision.git
-cd <carpeta_del_repositorio>
-python -m venv .venv
-# Windows: .venv\Scripts\activate    Linux/macOS: source .venv/bin/activate
-pip install -r requirements.txt
+cd parcial_ultima_transmision
+python -m pip install -r requirements.txt
 ```
 
 ## Ejecución
@@ -40,17 +38,18 @@ Durante la partida: escribe el número de la opción, `r` para reiniciar, `d` pa
 ## Pruebas
 
 ```bash
-python -m pytest
+python -m pytest                    # todas las pruebas
+python scripts/verificar_rnf.py     # verifica RNF01-RNF03 y guarda evidencias en evidencias/rnf/
 ```
-
-Configuración en `pytest.ini`. Archivos:
 
 | Archivo | Qué cubre |
 |---|---|
-| `tests/test_motor.py` | U1, U2, U3, U5, CA01, CA02, tres finales, bloqueo |
-| `tests/test_validador.py` | U4 (V01–V09), CA03, errores múltiples |
-| `tests/test_integracion.py` | I1 (archivo real + motor + consola), comando validar, segunda historia |
+| `tests/test_motor.py` | U1, U2, U3, U5, U6 (deshacer), CA01, CA02, tres finales, bloqueo |
+| `tests/test_validador.py` | U4 (V01–V09), CA03, errores múltiples, el validador no modifica los datos |
+| `tests/test_integracion.py` | I1 (archivo real + motor + consola, incluido deshacer desde un final), comando validar, segunda historia |
 | `tests/test_rnf.py` | RNF02 (archivos de `tests/datos_invalidos/`) y RNF03 (1000 entradas aleatorias) |
+
+Resultados guardados: `evidencias/pruebas/resultado_v1.txt` (antes del cambio), `resultado_v2.txt` (después del cambio), `resultado_final.txt`.
 
 ## Rutas para demostrar cada final
 
@@ -59,38 +58,55 @@ Configuración en `pytest.ini`. Archivos:
 | E4 Rescate | 1 Revisar señal → 1 Investigar archivo → 1 Activar con código |
 | E5 El eco | 1 Revisar señal → 2 Continuar sin investigar → 1 Activar sin verificar |
 | E6 Silencio | 1 Revisar señal → 2 Continuar sin investigar → 2 Cortar comunicación |
-## Formato de contenido
 
-_(Pendiente: explicación del contrato JSON para la escritora.)_
+Para ver cómo una condición cambia las opciones: en E2 elige "Investigar archivo" y en E3 aparece "Activar con código"; luego escribe `d`, elige "Continuar sin investigar" y en E3 aparece "Activar sin verificar".
 
-## Rutas para demostrar cada final
+## Formato de contenido (para escritores)
 
-| Final | Elecciones |
+Una historia es un archivo `.json` en `data/` con esta estructura. Se usa el contrato de referencia de la guía, sin cambios.
+
+| Elemento | Campos |
 |---|---|
-| E4 Rescate | _(pendiente)_ |
-| E5 El eco | _(pendiente)_ |
-| E6 Silencio | _(pendiente)_ |
+| Historia | `titulo` (texto), `inicio` (id de la escena inicial), `variables` (mapa de nombre → `true`/`false`), `escenas` (lista) |
+| Escena | `id` (único), `texto`, `final` (`true`/`false`), `opciones` (lista; vacía si es final, al menos una si no lo es) |
+| Opción | `id` (único dentro de la escena), `texto`, `destino` (id de escena existente), `condiciones` (mapa variable → valor que debe tener), `efectos` (mapa variable → valor que se asigna) |
+
+Reglas:
+- `condiciones` vacío (`{}`) = la opción siempre aparece. Con varias condiciones, deben cumplirse todas.
+- `efectos` vacío = no cambia ninguna variable.
+- Solo se usan variables declaradas en `variables` y solo valores `true` o `false` (sin comillas).
+
+Ejemplo de opción:
+```json
+{"id": "investigar", "texto": "Investigar archivo", "destino": "E3",
+ "condiciones": {}, "efectos": {"conoce_origen": true}}
+```
+
+Antes de publicar una historia, valídala con `python main.py validar <archivo>`. El programa nunca modifica el archivo; solo indica qué corregir.
 
 ## Estructura del repositorio
 
 ```
 data/          Historias en JSON (la de referencia y la segunda historia)
-src/           Código fuente del motor
-tests/         Pruebas automatizadas y archivos JSON inválidos para validación
-docs/          Plan de trabajo, backlog, diagramas, solicitud de cambio
-evidencias/    Capturas de tablero, resultados de pruebas y de RNF
-scripts/       Utilidades (creación del tablero)
+src/           Código fuente del motor (modelo, sesión, validador, cargador, consola)
+tests/         Pruebas automatizadas y archivos JSON inválidos (tests/datos_invalidos/)
+docs/          Documentación por unidad, diagramas (docs/diagramas/), backlog y solicitud de cambio
+evidencias/    Capturas del tablero, resultados de pruebas y de RNF
+scripts/       verificar_rnf.py (verificación de los requisitos no funcionales)
 IA.md          Registro del uso de herramientas de IA
 ```
 
 ## Versiones
 
 - `v1.0-pre-cambio`: versión guardada en la hora 6, antes de la solicitud de cambio.
-- `v2.0-post-cambio`: versión final entregada.
+- `v2.0-post-cambio`: versión final entregada, con deshacer (RF17–RF20).
 
 ## Limitaciones conocidas
 
-_(Pendiente.)_
+- Deshacer tiene un solo nivel y no existe rehacer (según la solicitud del cliente).
+- No se detectan escenas inalcanzables ni historias sin ningún camino a un final (supuesto P3); un bloqueo se informa durante la partida.
+- No hay guardado de partidas entre ejecuciones (fuera del alcance de la guía).
+- Solo interfaz de consola.
 
 ## Uso de IA
 
