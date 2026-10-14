@@ -64,6 +64,15 @@ Estos términos se usan igual en requisitos, diagramas y código.
 | RF15 | Cada error reportado indica su tipo, la causa y el campo o ID involucrado cuando sea identificable | En el caso de CA03, el mensaje incluye el tipo de error (destino inexistente), el id de la escena, el id de la opción y el valor `E99` |
 | RF16 | El validador detecta las nueve categorías de error de la tabla 3.3 | Cada categoría tiene un archivo inválido en `tests/datos_invalidos/` que el validador rechaza con su código de error |
 
+### N07: deshacer la última decisión (solicitud de cambio, hora 6)
+
+| ID | Requisito | Criterio de aceptación |
+|---|---|---|
+| RF17 | El lector puede deshacer la última elección válida; la sesión vuelve exactamente a la escena y a todas las variables previas, incluso desde una escena final o bloqueada | Desde E2, "Investigar archivo" lleva a E3 con `conoce_origen = verdadero`; deshacer deja E2 con `conoce_origen = falso`. Desde E4, E5 o E6, deshacer regresa a E3 con los valores previos |
+| RF18 | El retroceso tiene un solo nivel: tras deshacer no se permite otro hasta una nueva elección válida | Un segundo deshacer en E2 se rechaza sin cambios; tras "Continuar sin investigar", E3 muestra "Activar sin verificar" y "Cortar comunicación" y deshacer vuelve a estar disponible |
+| RF19 | Al comenzar no hay retroceso, y reiniciar elimina el historial | En sesión nueva, deshacer se rechaza; tras llegar a E4 y reiniciar, deshacer se rechaza y la escena sigue en E1 |
+| RF20 | Una opción inexistente o no habilitada no modifica la sesión ni reemplaza el punto de retroceso | En E3 tras investigar, enviar `xyz` se rechaza; luego deshacer regresa a E2 |
+
 ### 3.3 Categorías de error del validador (RF16)
 
 | Código | Error | Ejemplo de mensaje esperado |
@@ -88,6 +97,7 @@ Estos términos se usan igual en requisitos, diagramas y código.
 | N04 | RF10 |
 | N05 | RF11, RF12, RF13 |
 | N06 | RF14, RF15, RF16 |
+| N07 (cambio) | RF17, RF18, RF19, RF20 |
 
 ## 3.5 Requisitos no funcionales
 
@@ -101,7 +111,7 @@ Estos términos se usan igual en requisitos, diagramas y código.
 
 | # | Pregunta al cliente | Respuesta o supuesto registrado |
 |---|---|---|
-| P1 | La escritora quiere poder retroceder siempre y el diseñador quiere decisiones irreversibles. ¿El retroceso debe estar disponible siempre, solo en escenas que el escritor marque, o nunca? | **Sin respuesta durante la ventana. Acuerdo provisional:** la versión inicial no implementa retroceso; las decisiones son irreversibles dentro de una partida y el lector solo puede reiniciar (RF12). No se presupone la decisión final del cliente; el conflicto queda abierto para una versión posterior |
+| P1 | La escritora quiere poder retroceder siempre y el diseñador quiere decisiones irreversibles. ¿El retroceso debe estar disponible siempre, solo en escenas que el escritor marque, o nunca? | **Respondida en la hora 6** (`docs/solicitud_cambio_hora6.pdf`): el lector puede deshacer **solo su última decisión**, con un nivel. Reemplaza el acuerdo provisional de no implementar retroceso. Ver RF17–RF20 y `docs/05_solicitud_cambio.md` |
 | P2 | Si un archivo tiene varios errores, ¿el escritor quiere ver solo el primero o todos? | **Supuesto:** se reportan todos los errores encontrados en una sola validación, porque al escritor le ahorra cargas repetidas. Excepción: si el archivo es ilegible o le falta la estructura base (V01, V02 en la raíz), se informa ese error y se detiene la validación, porque no se puede revisar lo demás |
 | P3 | ¿Una escena a la que ninguna opción lleva (inalcanzable) debe tratarse como error? | **Supuesto:** no. La guía no exige analizar todos los caminos posibles, y una escena inalcanzable no rompe la partida. Queda fuera de alcance y se menciona como limitación conocida |
 
