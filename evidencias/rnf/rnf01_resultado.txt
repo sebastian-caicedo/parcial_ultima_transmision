@@ -1,0 +1,23 @@
+RNF01 - Agregar una historia requiere 0 líneas cambiadas en src/
+Fecha: 2026-10-14 21:16
+Resultado: CUMPLE
+
+Commit que agrega la segunda historia:
+0d1845f jxviercarta-a11y Wed Oct 14 21:05:16 2026 -0500 T24: segunda historia (closes #25)
+
+ data/segunda_historia.json | 85 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 85 insertions(+)
+
+Archivos de src/ modificados en ese commit: NINGUNO
+
+Prueba de integración con la segunda historia:
+============================= test session starts =============================
+platform win32 -- Python 3.14.4, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\Asus\parcial_ultima_transmision
+configfile: pytest.ini
+plugins: anyio-4.13.0
+collected 6 items / 5 deselected / 1 selected
+
+tests\test_integracion.py .                                              [100%]
+
+======================= 1 passed, 5 deselected in 0.03s =======================

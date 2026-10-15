@@ -1,0 +1,25 @@
+RNF02 - 9/9 archivos inválidos con código, causa e ID identificable
+Fecha: 2026-10-14 21:16
+Resultado: CUMPLE
+
+Casos aprobados: 10 (mínimo esperado 10)
+
+============================= test session starts =============================
+platform win32 -- Python 3.14.4, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Asus\AppData\Local\Python\pythoncore-3.14-64\python.exe
+rootdir: C:\Users\Asus\parcial_ultima_transmision
+configfile: pytest.ini
+plugins: anyio-4.13.0
+collecting ... collected 11 items / 1 deselected / 10 selected
+
+tests/test_rnf.py::test_RNF02_cada_archivo_invalido_tiene_codigo_e_identificador[V01__no_es_json] PASSED [ 10%]
+tests/test_rnf.py::test_RNF02_cada_archivo_invalido_tiene_codigo_e_identificador[V02__destino] PASSED [ 20%]
+tests/test_rnf.py::test_RNF02_cada_archivo_invalido_tiene_codigo_e_identificador[V03__E0] PASSED [ 30%]
+tests/test_rnf.py::test_RNF02_cada_archivo_invalido_tiene_codigo_e_identificador[V04__E3] PASSED [ 40%]
+tests/test_rnf.py::test_RNF02_cada_archivo_invalido_tiene_codigo_e_identificador[V05__cortar] PASSED [ 50%]
+tests/test_rnf.py::test_RNF02_cada_archivo_invalido_tiene_codigo_e_identificador[V06__E99] PASSED [ 60%]
+tests/test_rnf.py::test_RNF02_cada_archivo_invalido_tiene_codigo_e_identificador[V07__conoce_orgen] PASSED [ 70%]
+tests/test_rnf.py::test_RNF02_cada_archivo_invalido_tiene_codigo_e_identificador[V08__conoce_origen] PASSED [ 80%]
+tests/test_rnf.py::test_RNF02_cada_archivo_invalido_tiene_codigo_e_identificador[V09__E4] PASSED [ 90%]
+tests/test_rnf.py::test_RNF02_estan_las_nueve_categorias PASSED          [100%]
+
+====================== 10 passed, 1 deselected in 0.04s =======================
