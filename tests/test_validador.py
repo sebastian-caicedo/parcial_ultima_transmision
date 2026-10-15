@@ -18,13 +18,13 @@ def _escenas_no_es_lista(d): d["escenas"] = {"E1": {}}
 def _inicio_inexistente(d): d["inicio"] = "E0"
 def _escena_repetida(d): d["escenas"].append(dict(buscar_escena(d, "E6")))
 def _opcion_repetida(d): buscar_opcion(d, "E3", "activar_sin_verificar")["id"] = "cortar"
-def _destino_inexistente(d): buscar_opcion(d, "E3", "activar_con_codigo")["destino"] = "E99"
+def _destino_inexistente(d): buscar_opcion(d, "E3", "activar_codigo")["destino"] = "E99"
 def _variable_no_declarada_efecto(d): buscar_opcion(d, "E2", "investigar")["efectos"] = {"conoce_orgen": True}
-def _variable_no_declarada_condicion(d): buscar_opcion(d, "E3", "activar_con_codigo")["condiciones"] = {"sabe": True}
-def _no_booleano_condicion(d): buscar_opcion(d, "E3", "activar_con_codigo")["condiciones"]["conoce_origen"] = "si"
+def _variable_no_declarada_condicion(d): buscar_opcion(d, "E3", "activar_codigo")["condiciones"] = {"sabe": True}
+def _no_booleano_condicion(d): buscar_opcion(d, "E3", "activar_codigo")["condiciones"]["conoce_origen"] = "si"
 def _no_booleano_efecto(d): buscar_opcion(d, "E2", "investigar")["efectos"]["conoce_origen"] = 1
 def _no_booleano_variable(d): d["variables"]["conoce_origen"] = "falso"
-def _final_con_opciones(d): buscar_escena(d, "E4")["opciones"] = [dict(buscar_opcion(d, "E1", "revisar_senal"))]
+def _final_con_opciones(d): buscar_escena(d, "E4")["opciones"] = [dict(buscar_opcion(d, "E1", "revisar"))]
 def _no_final_sin_opciones(d): buscar_escena(d, "E1")["opciones"] = []
 
 
@@ -93,7 +93,7 @@ def test_CA03_destino_E99_rechaza_la_carga_sin_sesion(tmp_path, datos_referencia
 
     assert historia is None
     mensaje = str(info.value)
-    for fragmento in ("V06", "E3", "activar_con_codigo", "E99"):
+    for fragmento in ("V06", "E3", "activar_codigo", "E99"):
         assert fragmento in mensaje
 
 

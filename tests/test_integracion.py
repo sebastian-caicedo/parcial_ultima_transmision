@@ -16,7 +16,7 @@ def test_I1_archivo_real_y_motor_hasta_un_final():
     assert len(historia.escenas) == 6
     assert sesion.escena_actual.id == "E1"
 
-    for id_opcion in ("revisar_senal", "investigar", "activar_con_codigo"):
+    for id_opcion in ("revisar", "investigar", "activar_codigo"):
         assert sesion.elegir(id_opcion).aceptada
 
     assert sesion.escena_actual.id == "E4"

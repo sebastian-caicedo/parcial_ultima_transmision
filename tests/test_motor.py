@@ -19,7 +19,7 @@ def textos(opciones):
     ids=["conoce_origen_verdadero", "conoce_origen_falso"],
 )
 def test_U1_condiciones_habilitan_solo_opciones_correspondientes(sesion, eleccion_en_e2, esperadas):
-    assert sesion.elegir("revisar_senal").aceptada
+    assert sesion.elegir("revisar").aceptada
     assert sesion.elegir(eleccion_en_e2).aceptada
 
     assert sesion.escena_actual.id == "E3"
@@ -28,12 +28,12 @@ def test_U1_condiciones_habilitan_solo_opciones_correspondientes(sesion, eleccio
 
 
 def test_U1_condiciones_vacias_siempre_habilitan(sesion):
-    assert [o.id for o in sesion.opciones_habilitadas()] == ["revisar_senal"]
+    assert [o.id for o in sesion.opciones_habilitadas()] == ["revisar"]
 
 
 # ---------- U2: elección válida aplica efectos y avanza (RF06, RF07, RF10) ----------
 def test_U2_eleccion_valida_aplica_efectos_y_avanza(sesion):
-    sesion.elegir("revisar_senal")
+    sesion.elegir("revisar")
     resultado = sesion.elegir("investigar")
 
     assert resultado.aceptada
@@ -44,11 +44,11 @@ def test_U2_eleccion_valida_aplica_efectos_y_avanza(sesion):
 # ---------- U3: opción inexistente o no habilitada deja intacto el estado (RF08, CA02) ----------
 @pytest.mark.parametrize(
     "entrada",
-    ["activar_con_codigo", "xyz", "", None, 3, "ACTIVAR_SIN_VERIFICAR"],
+    ["activar_codigo", "xyz", "", None, 3, "ACTIVAR_SIN_VERIFICAR"],
     ids=["no_habilitada_CA02", "inexistente", "vacia", "none", "numero", "mayusculas"],
 )
 def test_U3_eleccion_invalida_deja_intacto_el_estado(sesion, entrada):
-    sesion.elegir("revisar_senal")
+    sesion.elegir("revisar")
     sesion.elegir("continuar")          # E3 sin conocer el origen
     escena_antes, estado_antes = sesion.escena_actual.id, sesion.estado
 
@@ -61,7 +61,7 @@ def test_U3_eleccion_invalida_deja_intacto_el_estado(sesion, entrada):
 
 
 def test_U3_eleccion_en_escena_final_es_rechazada(sesion):
-    for id_opcion in ("revisar_senal", "continuar", "cortar"):
+    for id_opcion in ("revisar", "continuar", "cortar"):
         sesion.elegir(id_opcion)
     estado_antes = sesion.estado
 
@@ -71,7 +71,7 @@ def test_U3_eleccion_en_escena_final_es_rechazada(sesion):
 
 
 def test_CA02_activar_sin_verificar_lleva_a_E5(sesion):
-    sesion.elegir("revisar_senal")
+    sesion.elegir("revisar")
     sesion.elegir("continuar")
     assert sesion.elegir("activar_sin_verificar").aceptada
     assert sesion.escena_actual.id == "E5"
@@ -79,7 +79,7 @@ def test_CA02_activar_sin_verificar_lleva_a_E5(sesion):
 
 # ---------- U5: reiniciar restaura escena y variables iniciales (RF12) ----------
 def test_U5_reiniciar_restaura_escena_y_variables(sesion):
-    for id_opcion in ("revisar_senal", "investigar", "activar_con_codigo"):
+    for id_opcion in ("revisar", "investigar", "activar_codigo"):
         assert sesion.elegir(id_opcion).aceptada
     assert sesion.escena_actual.id == "E4"
     assert sesion.estado == {"conoce_origen": True, "confia_en_la_voz": True}
@@ -99,9 +99,9 @@ def test_U5_reiniciar_restaura_escena_y_variables(sesion):
 @pytest.mark.parametrize(
     "ruta, final_esperado",
     [
-        (["revisar_senal", "investigar", "activar_con_codigo"], "E4"),
-        (["revisar_senal", "continuar", "activar_sin_verificar"], "E5"),
-        (["revisar_senal", "continuar", "cortar"], "E6"),
+        (["revisar", "investigar", "activar_codigo"], "E4"),
+        (["revisar", "continuar", "activar_sin_verificar"], "E5"),
+        (["revisar", "continuar", "cortar"], "E6"),
     ],
     ids=["rescate", "eco", "silencio"],
 )
@@ -137,7 +137,7 @@ def test_escena_no_final_sin_opciones_habilitadas_se_reporta_bloqueada():
 
 # ---------- U6 (cambio hora 6): deshacer la última decisión (RF17-RF20) ----------
 def _ir_a_E3_investigando(sesion):
-    sesion.elegir("revisar_senal")
+    sesion.elegir("revisar")
     sesion.elegir("investigar")
     assert sesion.escena_actual.id == "E3" and sesion.estado["conoce_origen"] is True
 
@@ -201,9 +201,9 @@ def test_U6_al_comenzar_no_hay_retroceso(sesion):
 @pytest.mark.parametrize(
     "ruta, estado_en_E3",
     [
-        (["revisar_senal", "investigar", "activar_con_codigo"], {"conoce_origen": True, "confia_en_la_voz": False}),
-        (["revisar_senal", "continuar", "activar_sin_verificar"], {"conoce_origen": False, "confia_en_la_voz": False}),
-        (["revisar_senal", "continuar", "cortar"], {"conoce_origen": False, "confia_en_la_voz": False}),
+        (["revisar", "investigar", "activar_codigo"], {"conoce_origen": True, "confia_en_la_voz": False}),
+        (["revisar", "continuar", "activar_sin_verificar"], {"conoce_origen": False, "confia_en_la_voz": False}),
+        (["revisar", "continuar", "cortar"], {"conoce_origen": False, "confia_en_la_voz": False}),
     ],
     ids=["desde_E4", "desde_E5", "desde_E6"],
 )

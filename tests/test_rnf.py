@@ -35,16 +35,16 @@ def test_RNF02_estan_las_nueve_categorias():
 def test_RNF03_1000_entradas_invalidas_sin_fallos_ni_cambios(sesion):
     """1000 entradas aleatorias (semilla 2026): 0 excepciones y estado idéntico tras cada rechazo."""
     azar = random.Random(2026)
-    sesion.elegir("revisar_senal")
+    sesion.elegir("revisar")
     sesion.elegir("continuar")                    # E3 sin conocer el origen
     generadores = [
-        lambda: "activar_con_codigo",             # existe pero no habilitada
+        lambda: "activar_codigo",             # existe pero no habilitada
         lambda: "".join(azar.choices("abcxyz_0123", k=azar.randint(0, 12))),
         lambda: str(azar.randint(-100, 100)),
         lambda: azar.randint(-100, 100),
         lambda: None,
         lambda: "",
-        lambda: azar.choice(["E1", "E2", "E4", "revisar_senal", "investigar"]),
+        lambda: azar.choice(["E1", "E2", "E4", "revisar", "investigar"]),
     ]
     rechazos = 0
     for _ in range(1000):

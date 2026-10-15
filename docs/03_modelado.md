@@ -14,7 +14,7 @@ Los diagramas están en `docs/diagramas/`. Cada uno tiene su fuente PlantUML (`.
 
 - **La validación ocurre antes de que exista la sesión.** Por eso el diagrama de estados empieza con "historia válida cargada": una historia inválida nunca llega a crear una sesión (RF14). Los errores se modelan como `ErrorContenido` agrupados en `HistoriaInvalidaError`.
 - **El rechazo de una elección no es una excepción.** `elegir()` devuelve un `ResultadoEleccion` con `aceptada = falso` y el motivo. Así una entrada inválida nunca puede cerrar el programa (RNF03), y la interfaz decide cómo mostrar el aviso.
-- **La regla de habilitación vive en `Opcion`** (`esta_habilitada(estado)`). Ni la sesión ni la interfaz conocen IDs concretos como E3 o `activar_con_codigo`, lo que cumple la exigencia de la guía de evaluar las condiciones desde los datos.
+- **La regla de habilitación vive en `Opcion`** (`esta_habilitada(estado)`). Ni la sesión ni la interfaz conocen IDs concretos como E3 o `activar_codigo`, lo que cumple la exigencia de la guía de evaluar las condiciones desde los datos.
 - **Hay dos niveles de validación de la elección**, visibles en la secuencia. La interfaz filtra lo que el lector escribe (RF09) y el motor vuelve a verificar el id recibido (RF08). El segundo control es el que cumple CA02, aunque alguien salte la interfaz.
 
 ## Actualización por la solicitud de cambio (hora 6)

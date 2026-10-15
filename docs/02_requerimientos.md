@@ -39,7 +39,7 @@ Estos términos se usan igual en requisitos, diagramas y código.
 |---|---|---|
 | RF06 | Al elegir una opción habilitada, el sistema aplica todos sus efectos al estado | En E2, elegir "Investigar archivo" deja `conoce_origen = verdadero` |
 | RF07 | Al elegir una opción habilitada, la escena actual pasa a ser el destino de la opción | En E2, elegir "Investigar archivo" deja la escena actual en E3 |
-| RF08 | El motor rechaza una opción inexistente o no habilitada, informa el motivo y deja intactos la escena y el estado | **CA02:** en E3 sin conocer el origen, enviar directamente al motor el id `activar_con_codigo` se rechaza; la escena sigue en E3 y las variables no cambian. Lo mismo ocurre con un id inexistente (`xyz`) |
+| RF08 | El motor rechaza una opción inexistente o no habilitada, informa el motivo y deja intactos la escena y el estado | **CA02:** en E3 sin conocer el origen, enviar directamente al motor el id `activar_codigo` se rechaza; la escena sigue en E3 y las variables no cambian. Lo mismo ocurre con un id inexistente (`xyz`) |
 | RF09 | La interfaz rechaza entradas que no correspondan a una opción mostrada (texto, vacío, número fuera de rango) y vuelve a pedir la elección sin terminar el programa | Escribir `abc`, dejar vacío o escribir `9` en una escena con 2 opciones muestra un aviso y vuelve a mostrar las mismas opciones |
 
 ### N04: recordar lo ocurrido durante la partida
@@ -82,9 +82,9 @@ Estos términos se usan igual en requisitos, diagramas y código.
 | V03 | La escena de `inicio` no existe | `V03 La escena de inicio 'E0' no existe` |
 | V04 | IDs de escena repetidos | `V04 El id de escena 'E3' está repetido` |
 | V05 | IDs de opción repetidos dentro de la misma escena | `V05 El id de opción 'cortar' está repetido en la escena 'E3'` |
-| V06 | Destino inexistente | `V06 La opción 'activar_con_codigo' de la escena 'E3' apunta a 'E99', que no existe` |
+| V06 | Destino inexistente | `V06 La opción 'activar_codigo' de la escena 'E3' apunta a 'E99', que no existe` |
 | V07 | Variable no declarada en condiciones o efectos | `V07 La variable 'conoce_orgen' usada en efectos de 'investigar' (E2) no está declarada` |
-| V08 | Valor no booleano en `variables`, condiciones o efectos | `V08 La condición 'conoce_origen' de 'activar_con_codigo' (E3) tiene el valor "si", que no es booleano` |
+| V08 | Valor no booleano en `variables`, condiciones o efectos | `V08 La condición 'conoce_origen' de 'activar_codigo' (E3) tiene el valor "si", que no es booleano` |
 | V09 | Cantidad de opciones incompatible con `final` (final con opciones, o no final sin opciones) | `V09 La escena 'E4' es final pero tiene 1 opción` |
 
 ### 3.4 Trazabilidad necesidad → requisito
