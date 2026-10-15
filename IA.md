@@ -26,7 +26,7 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 | 9 | Unidad 5 – Modelado | Claude generó clases, secuencia y estados (Sebastián); ChatGPT generó contexto y casos de uso (Javier) | Nombres iguales al vocabulario de requisitos; RF anotados; se corrigió "Escritora" → "Escritor" en la revisión de coherencia |
 | 10 | Unidad 6 – Arquitectura | Generó diagrama de capas y dos ADR con alternativas | Dependencias en un solo sentido; nombres de archivo iguales al código |
 | 11 | Unidad 7 – Implementación | Generó motor, validador, consola y pruebas siguiendo los diagramas 03 y 06 | Ejecución de pytest (45 pasan); juego manual de los tres finales |
-| 12 | Pruebas automatizadas | | |
+| 12 | Pruebas automatizadas | Incluidas en las filas 11 y 13 (U1–U6, I1, RNF02, RNF03) | `evidencias/pruebas/` y `evidencias/rnf/` |
 | 13 | Solicitud de cambio | Implementó deshacer en la sesión y la consola, pruebas U6 y análisis de impacto | 57 pruebas pasan; recorrido manual deshaciendo desde un final |
 | 14 | README e informe | | |
 
