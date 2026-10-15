@@ -7,7 +7,7 @@ skinparam packageStyle rectangle
 skinparam ArrowColor #35577A
 skinparam usecaseBackgroundColor #ECF5FD
 skinparam usecaseBorderColor #235B89
-actor "Escritora" as Escritora
+actor "Escritor" as Escritor
 actor "Lector" as Lector
 actor "Sistema de archivos" as Archivos
 
@@ -16,17 +16,19 @@ rectangle "Motor de historias interactivas" {
   usecase "Cargar historia\n(RF01, RF03)" as UC2
   usecase "Validar historia\n(RF14-RF16)" as UC3
   usecase "Leer escena y opciones\n(RF04, RF05, RF10)" as UC4
-  usecase "Elegir opcion\n(RF06-RF10)" as UC5
-  usecase "Reiniciar sesion\n(RF12)" as UC6
+  usecase "Elegir opción\n(RF06-RF10)" as UC5
+  usecase "Reiniciar sesión\n(RF12)" as UC6
   usecase "Reconocer final\n(RF11)" as UC7
   usecase "Informar bloqueo\n(RF13)" as UC8
+  usecase "Deshacer última decisión\n(RF17-RF20)" as UC9
 }
-Escritora --> UC2
-Escritora --> UC3
+Escritor --> UC2
+Escritor --> UC3
 Lector --> UC1
 Lector --> UC4
 Lector --> UC5
 Lector --> UC6
+Lector --> UC9
 Archivos --> UC2
 UC1 ..> UC2 : <<include>>
 UC2 ..> UC3 : <<include>>

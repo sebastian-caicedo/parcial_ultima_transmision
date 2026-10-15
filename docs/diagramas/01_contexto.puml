@@ -6,21 +6,21 @@ skinparam defaultFontName Arial
 skinparam ArrowColor #35577A
 skinparam RectangleBorderColor #235B89
 skinparam RectangleBackgroundColor #ECF5FD
-actor "Escritora" as Escritora
+actor "Escritor" as Escritor
 actor "Lector" as Lector
 rectangle "Motor de historias\ninteractivas\n(N01-N06)" as Motor
 rectangle "Sistema de archivos\n(historias JSON)" as Archivos #F4F5F7
 
-Escritora --> Motor : Indica ruta de historia\ny solicita validacion
-Motor --> Escritora : Errores de contenido\n(codigo, causa y ubicacion)
-Lector --> Motor : Inicia, elige\ny reinicia
+Escritor --> Motor : Indica ruta de historia\ny solicita validación
+Motor --> Escritor : Errores de contenido\n(código, causa y ubicación)
+Lector --> Motor : Inicia, elige, deshace\ny reinicia
 Motor --> Lector : Escenas, opciones\ny resultados
 Motor --> Archivos : Lee historia JSON\n(sin modificarla)
 
 note bottom of Motor
   Interesados indirectos:
-  Disenador de experiencia y
+  Diseñador de experiencia y
   Coordinadora del festival.
-  No interactuan directamente.
+  No interactúan directamente.
 end note
 @enduml
