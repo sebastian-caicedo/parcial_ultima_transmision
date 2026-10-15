@@ -28,7 +28,7 @@ La guía del parcial pide identificar las herramientas de IA utilizadas, para qu
 | 11 | Unidad 7 – Implementación | Generó motor, validador, consola y pruebas siguiendo los diagramas 03 y 06 | Ejecución de pytest (45 pasan); juego manual de los tres finales |
 | 12 | Pruebas automatizadas | Incluidas en las filas 11 y 13 (U1–U6, I1, RNF02, RNF03) | `evidencias/pruebas/` y `evidencias/rnf/` |
 | 13 | Solicitud de cambio | Implementó deshacer en la sesión y la consola, pruebas U6 y análisis de impacto | 57 pruebas pasan; recorrido manual deshaciendo desde un final |
-| 14 | README e informe | | |
+| 14 | README e informe | Redactó README, informe (5 págs.) y anexo a partir de docs/01–07; ajustó pruebas al JSON oficial | Resultados del informe contrastados con evidencias/ (68/68, RNF cumplen) |
 
 ---
 
