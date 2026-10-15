@@ -1,0 +1,85 @@
+{
+  "titulo": "La bóveda de la estación",
+  "inicio": "E1",
+  "variables": {
+    "tiene_tarjeta": false,
+    "alarma_activa": false
+  },
+  "escenas": [
+    {
+      "id": "E1",
+      "texto": "Llegas a una estación orbital abandonada. En una consola encuentras una tarjeta magnética.",
+      "final": false,
+      "opciones": [
+        {
+          "id": "tomar_tarjeta",
+          "texto": "Tomar la tarjeta",
+          "destino": "E2",
+          "condiciones": {},
+          "efectos": {
+            "tiene_tarjeta": true
+          }
+        },
+        {
+          "id": "avanzar_sin_tarjeta",
+          "texto": "Avanzar sin la tarjeta",
+          "destino": "E2",
+          "condiciones": {},
+          "efectos": {}
+        }
+      ]
+    },
+    {
+      "id": "E2",
+      "texto": "La bóveda central está cerrada. Puedes usar la tarjeta, forzar la compuerta o retirarte.",
+      "final": false,
+      "opciones": [
+        {
+          "id": "abrir_boveda",
+          "texto": "Abrir la bóveda con la tarjeta",
+          "destino": "E3",
+          "condiciones": {
+            "tiene_tarjeta": true
+          },
+          "efectos": {}
+        },
+        {
+          "id": "forzar_compuerta",
+          "texto": "Forzar la compuerta",
+          "destino": "E4",
+          "condiciones": {
+            "tiene_tarjeta": false
+          },
+          "efectos": {
+            "alarma_activa": true
+          }
+        },
+        {
+          "id": "retirarse",
+          "texto": "Retirarse",
+          "destino": "E5",
+          "condiciones": {},
+          "efectos": {}
+        }
+      ]
+    },
+    {
+      "id": "E3",
+      "texto": "Final: recuperas el registro de navegación sin activar ninguna alarma.",
+      "final": true,
+      "opciones": []
+    },
+    {
+      "id": "E4",
+      "texto": "Final: logras abrir la compuerta, pero la alarma alerta a los sistemas de seguridad.",
+      "final": true,
+      "opciones": []
+    },
+    {
+      "id": "E5",
+      "texto": "Final: abandonas la estación y el secreto de la bóveda queda sin resolver.",
+      "final": true,
+      "opciones": []
+    }
+  ]
+}
