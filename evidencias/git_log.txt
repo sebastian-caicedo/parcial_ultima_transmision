@@ -1,0 +1,51 @@
+17ca783 | sebastian-caicedo | 2026-10-14 21:24:51 -0500 | Update README.md
+1c7dc8a | sebastian-caicedo | 2026-10-14 21:21:55 -0500 | T32: informe final y anexo (closes #33)
+80e23b4 | sebastian-caicedo | 2026-10-14 21:16:20 -0500 | T29: evidencias de RNF y resultado final de pruebas (closes #30)
+40c3add | sebastian-caicedo | 2026-10-14 21:15:33 -0500 | T02: captura inicial del tablero (closes #2)
+dc66491 | sebastian-caicedo | 2026-10-14 21:15:06 -0500 | T13: regenera PNG de contexto y casos de uso
+6fab22c | sebastian-caicedo | 2026-10-14 21:13:54 -0500 | Reemplaza JSON por el oficial del profesor y ajusta IDs en pruebas y docs
+0d1845f | jxviercarta-a11y | 2026-10-14 21:05:16 -0500 | T24: segunda historia (closes #25)
+7d9386b | jxviercarta-a11y | 2026-10-14 21:01:20 -0500 | T23: agregar archivo V04 faltante
+31e41d3 | jxviercarta-a11y | 2026-10-14 20:59:50 -0500 | T23: archivos JSON inválidos V01-V09 (closes #24)
+27c525a | jxviercarta-a11y | 2026-10-14 20:52:15 -0500 | T13: actualizar diagramas por cambio de deshacer
+b924c46 | sebastian-caicedo | 2026-10-14 19:18:06 -0500 | T32: informe preliminar
+c28c4d7 | sebastian-caicedo | 2026-10-14 19:01:05 -0500 | Add details on automated tests in IA.md
+60f552a | sebastian-caicedo | 2026-10-14 19:00:42 -0500 | Update rollback section in fundamentals document
+b7d7f7f | sebastian-caicedo | 2026-10-14 19:00:02 -0500 | Revise architecture documentation for console and session
+32c5806 | sebastian-caicedo | 2026-10-14 18:56:40 -0500 | Add 'undo' feature to modeling documentation
+fb63fd9 | sebastian-caicedo | 2026-10-14 18:52:43 -0500 | Revise README for clarity and additional information
+5d98452 | sebastian-caicedo | 2026-10-14 18:51:55 -0500 | Elimina archivo vacío agregado por error
+0919427 | sebastian-caicedo | 2026-10-14 18:44:47 -0500 | Revise Unidad 5 contributions and terminology
+e8d0db5 | sebastian-caicedo | 2026-10-14 18:42:26 -0500 | Update IA.md
+5f47fb8 | sebastian-caicedo | 2026-10-14 18:38:57 -0500 | Add files via upload
+8450a7e | sebastian-caicedo | 2026-10-14 18:36:33 -0500 | Delete docs/Anexo hora 6 La ultima transmision.pdf
+61ed22c | sebastian-caicedo | 2026-10-14 18:35:32 -0500 | T36, T28: agilidad, matriz de trazabilidad y script de verificación de RNF (closes #37, closes #29)
+f0fb59e | sebastian-caicedo | 2026-10-14 18:23:26 -0500 | Add undo functionality and update tests and documentation
+b970d2f | sebastian-caicedo | 2026-10-14 18:22:15 -0500 | Update gameplay instructions in README
+92fba40 | sebastian-caicedo | 2026-10-14 18:21:49 -0500 | Add requirement updates and scope changes to backlog
+9511b6c | sebastian-caicedo | 2026-10-14 18:20:28 -0500 | Cambio en el alcance despues de la solicitud
+7806f8e | sebastian-caicedo | 2026-10-14 18:19:18 -0500 | Añadidos despues del cambio
+eef8d9d | sebastian-caicedo | 2026-10-14 18:14:24 -0500 | T26-T27: deshacer última decisión (RF17-RF20), pruebas U6 y modelos actualizados (closes #27, closes #28)
+3742bb6 | sebastian-caicedo | 2026-10-14 18:08:29 -0500 | Update repository URL in installation instructions
+7a7c016 | sebastian-caicedo | 2026-10-14 18:07:38 -0500 | Update README with execution and testing instructions
+d0195c1 | sebastian-caicedo | 2026-10-14 16:00:40 -0500 | Document implementation details for Unidad 7
+defdbf7 | sebastian-caicedo | 2026-10-14 15:57:47 -0500 | T19-T22: cargador, validador, motor, consola y pruebas U1-U5, I1 (closes #20, closes #21, closes #22, closes #23)
+41b7aff | sebastian-caicedo | 2026-10-14 15:45:50 -0500 | Delete scripts/crear_tablero.ps1
+02955b0 | sebastian-caicedo | 2026-10-14 15:45:35 -0500 | Revise Unidad 2 and Unidad 1 content in IA.md
+8b3722f | sebastian-caicedo | 2026-10-14 15:36:36 -0500 | Revise Units 2, 4, 5, and 6 with new details
+087af3b | sebastian-caicedo | 2026-10-14 15:28:50 -0500 | T17-T18: diagrama de capas y decisiones de arquitectura (closes #18, closes #19)
+e72c750 | jxviercarta-a11y | 2026-10-14 15:23:12 -0500 | T12-T13: diagramas de contexto y casos de uso
+b43a423 | sebastian-caicedo | 2026-10-14 15:17:47 -0500 | Diagramas
+7fe7d98 | sebastian-caicedo | 2026-10-14 15:15:31 -0500 | Revise RNF02 for error clarity and cross-review details
+79ca91d | sebastian-caicedo | 2026-10-14 15:10:14 -0500 | Delete docs/mapa_issues.txt
+026893e | sebastian-caicedo | 2026-10-14 15:09:28 -0500 | modelado
+b638b56 | jxviercarta-a11y | 2026-10-14 15:07:56 -0500 | T11: revision cruzada de requisitos
+f411e0c | sebastian-caicedo | 2026-10-14 15:00:12 -0500 | Revise cross-review section and clean up notes
+dccc21e | sebastian-caicedo | 2026-10-14 14:59:20 -0500 | Add files via upload
+4344aa8 | sebastian-caicedo | 2026-10-14 14:39:35 -0500 | Add project fundamentals and process documentation
+bee38ee | sebastian-caicedo | 2026-10-14 14:33:59 -0500 | Update IA.md
+707e547 | sebastian-caicedo | 2026-10-14 14:33:36 -0500 | Actualizar IA.md con registro de uso y verificación
+c22f8b1 | jxviercarta-a11y | 2026-10-14 14:26:44 -0500 | Add files via upload
+7914c44 | sebastian-caicedo | 2026-10-14 13:52:12 -0500 | Delete scripts/crear_tablero.sh
+26584b9 | sebastian-caicedo | 2026-10-14 13:51:27 -0500 | Add files via upload
+6185da9 | sebastian-caicedo | 2026-10-14 13:47:42 -0500 | T01: estructura inicial, historia de referencia, backlog y plan de trabajo
