@@ -108,6 +108,14 @@ IA.md          Registro del uso de herramientas de IA
 - No hay guardado de partidas entre ejecuciones (fuera del alcance de la guía).
 - Solo interfaz de consola.
 
+## Entrega
+
+- Informe: `docs/Informe_Parcial.pdf` (máx. 8 páginas)
+- Anexo (diagramas, matriz de trazabilidad, capturas del tablero): `docs/Anexo_Parcial.pdf`
+- Video de demostración: `demo.mp4` (incluido en el ZIP de entrega)
+- Historial de Git: `evidencias/git_log.txt`
+- Evidencias de pruebas y RNF: `evidencias/pruebas/` y `evidencias/rnf/`
+
 ## Uso de IA
 
 Ver [IA.md](IA.md).
