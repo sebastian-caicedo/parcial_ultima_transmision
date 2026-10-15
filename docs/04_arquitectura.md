@@ -6,8 +6,8 @@ Diagrama: `docs/diagramas/06_componentes.png` (fuente `06_componentes.puml`).
 
 | Capa | Componente (archivo) | Responsabilidad | Depende de |
 |---|---|---|---|
-| Interfaz | Consola (`src/motor_historias/consola.py`) | Mostrar escena y opciones habilitadas, leer y filtrar la entrada del lector (RF09), mostrar final, bloqueo y errores de validación. Ofrece dos comandos: `jugar` y `validar` | Carga, Motor |
-| Motor (reglas) | Sesión (`sesion.py`) | Opciones habilitadas, elegir, aplicar efectos, avanzar al destino, detectar final y bloqueo, reiniciar (RF02, RF05–RF13) | Modelo |
+| Interfaz | Consola (`src/motor_historias/consola.py`) | Mostrar escena y opciones habilitadas, leer y filtrar la entrada del lector (RF09), mostrar final, bloqueo y errores de validación, Comando d para deshacer (RF17). Ofrece tres comandos: `jugar`, `validar` y `deshacer` | Carga, Motor |
+| Motor (reglas) | Sesión (`sesion.py`) | Opciones habilitadas, elegir, aplicar efectos, avanzar al destino, detectar final y bloqueo, reiniciar, deshacer un nivel (RF02, RF05–RF13, RF17–RF20) | Modelo |
 | Motor (reglas) | Modelo de dominio (`modelo.py`) | Historia, Escena, Opción (con la regla `esta_habilitada`), ResultadoElección, ErrorContenido | Nada |
 | Carga y validación | Cargador (`cargador.py`) | Leer el archivo, pedir la validación y, si no hay errores, construir la Historia (RF01, RF14) | Validador, Modelo |
 | Carga y validación | Validador (`validador.py`) | Detectar V01–V09 y generar mensajes con código, causa e ID (RF15, RF16) | Modelo |
@@ -50,6 +50,10 @@ Diagrama: `docs/diagramas/06_componentes.png` (fuente `06_componentes.puml`).
   3. *Validación completa previa:* el validador recorre todo el archivo, reporta todos los errores encontrados (supuesto P2) y solo si no hay ninguno se construye la historia y se permite crear una sesión.
 - **Elección:** alternativa 3.
 - **Consecuencias:**
+- 
+## 5.4 Validación de la arquitectura con el cambio
+
+La solicitud de la hora 6 solo modificó `sesion.py` y `consola.py`. Modelo, cargador, validador y las historias JSON quedaron intactos, como anticipaba ADR-01 frente al riesgo R2. Se puede comprobar con `git diff v1.0-pre-cambio v2.0-post-cambio --stat -- src/`.
   - ✅ Una historia inválida nunca llega al lector (RF14, CA03).
   - ✅ El motor puede asumir datos válidos: no comprueba destinos ni variables en tiempo de juego, lo que lo simplifica.
   - ✅ El escritor ve todos sus errores de una vez.
